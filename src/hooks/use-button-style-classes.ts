@@ -16,7 +16,7 @@ interface ButtonStyleProps {
 export function useButtonStyleClasses(props: ButtonStyleProps) {
   return computed(() => {
     const baseClasses =
-      'flex items-center border-2 font-medium rounded-md focus-visible:outline-2 outline-blue-500 outline-offset-4 hover:shadow-md'
+      'flex items-center justify-center border-2 font-medium rounded-md focus-visible:outline-2 outline-blue-500 outline-offset-4 hover:shadow-md'
     const sizeClasses = props.size
       ? sizeClassesOptions[props.size]
       : sizeClassesOptions.medium

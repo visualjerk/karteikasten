@@ -23,7 +23,7 @@ import MenuItem from './components/MenuItem.vue'
         Atomic Learning
       </router-link>
       <nav class="flex items-center gap-2">
-        <MenuItem to="/">Intro</MenuItem>
+        <MenuItem to="/">Your Boxes</MenuItem>
       </nav>
     </header>
 

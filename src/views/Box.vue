@@ -53,8 +53,8 @@ async function handleRemove() {
       Add cards to this box
     </router-link>
     <div v-else>
-      <div class="flex justify-center gap-3">
-        <ActionButton primary size="large" class="mb-8">
+      <div class="grid sm:grid-cols-2 gap-5 py-4 mb-10">
+        <ActionButton primary size="large">
           <svg
             style="width: 24px; height: 24px"
             viewBox="0 0 24 24"
@@ -67,6 +67,7 @@ async function handleRemove() {
           </svg>
           Start Learning
         </ActionButton>
+        <ActionButton size="large"> Reset Learning Progress </ActionButton>
       </div>
       <div class="grid gap-2 mb-6">
         <BoxCard v-for="(card, index) in box.cards" :key="index">
