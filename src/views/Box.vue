@@ -70,8 +70,8 @@ async function handleRemove() {
       </div>
       <div class="grid gap-2 mb-6">
         <BoxCard v-for="(card, index) in box.cards" :key="index">
-          <BoxCardInput v-model="card.front" readonly />
-          <BoxCardInput v-model="card.back" readonly />
+          <BoxCardInput :model-value="card.front" readonly />
+          <BoxCardInput :model-value="card.back" readonly />
         </BoxCard>
       </div>
     </div>
