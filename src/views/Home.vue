@@ -1,25 +1,8 @@
 <script setup lang="ts">
 import LinkButton from '../components/LinkButton.vue'
+import { useBoxes } from '../store/boxes'
 
-interface Box {
-  id: number
-  name: string
-}
-
-const boxes: Box[] = [
-  {
-    id: 1,
-    name: 'German',
-  },
-  {
-    id: 2,
-    name: 'Spain',
-  },
-  {
-    id: 3,
-    name: 'JS Syntax',
-  },
-]
+const { all: boxes } = useBoxes()
 </script>
 
 <template>
@@ -30,18 +13,14 @@ const boxes: Box[] = [
       else that fits on a card.
     </p>
 
-    <h2 class="text-2xl mb-2">Your Boxes</h2>
+    <h2 class="text-2xl mb-4">Your Boxes</h2>
 
-    <div class="grid grid-cols-2 gap-3">
+    <div class="grid grid-cols-2 gap-4">
       <RouterLink
         to="/new-box"
-        class="p-6 text-2xl bg-white shadow-md rounded-lg hover:shadow-lg flex flex-col items-center gap-2"
+        class="p-6 text-2xl border border-dashed rounded-lg hover:shadow-lg flex items-center justify-center gap-2"
       >
-        <svg
-          style="width: 30px; height: 30px"
-          viewBox="0 0 24 24"
-          class="text-purple-500"
-        >
+        <svg style="width: 30px; height: 30px" viewBox="0 0 24 24">
           <path
             fill="currentColor"
             d="M19,19V5H5V19H19M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5C3,3.89 3.9,3 5,3H19M11,7H13V11H17V13H13V17H11V13H7V11H11V7Z"
