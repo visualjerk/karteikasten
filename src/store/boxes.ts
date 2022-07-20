@@ -1,5 +1,5 @@
-import { createGlobalState, useStorage } from '@vueuse/core'
-import { readonly } from 'vue'
+import { createGlobalState, MaybeComputedRef, useStorage } from '@vueuse/core'
+import { readonly, computed, unref } from 'vue'
 
 export interface Card {
   front: string
@@ -52,5 +52,14 @@ export function useBoxes() {
   return {
     all: readonly(all),
     add,
+  }
+}
+
+export function useBox(id: MaybeComputedRef<number>) {
+  const all = useGlobalBoxesState()
+  const box = computed(() => all.value.find((box) => box.id === unref(id)))
+
+  return {
+    box,
   }
 }

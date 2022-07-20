@@ -9,8 +9,12 @@ const inputFrontEl = ref<HTMLInputElement>()
 const newCard = ref<Card>({ front: '', back: '' })
 const cardList = ref<Card[]>([])
 
-async function addCard() {
+function addCard() {
   cardList.value.push(newCard.value)
+}
+
+async function handleEnter() {
+  addCard()
   newCard.value = { front: '', back: '' }
   await nextTick()
   inputFrontEl.value?.focus()
@@ -19,6 +23,7 @@ async function addCard() {
 const { push } = useRouter()
 const { add } = useBoxes()
 function save() {
+  addCard()
   add({
     name: boxName.value,
     cards: cardList.value,
@@ -62,7 +67,7 @@ onMounted(() => {
         <input
           class="p-2"
           v-model="newCard.back"
-          @keydown.enter="addCard"
+          @keydown.enter="handleEnter"
           placeholder="Backside ..."
         />
       </div>
