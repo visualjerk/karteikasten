@@ -44,28 +44,34 @@ onMounted(() => {
     />
     <div class="grid gap-2 mb-4">
       <div
-        class="grid grid-cols-2"
+        class="grid grid-cols-2 gap-2 p-3 bg-white rounded-md shadow-sm focus-within:shadow-md"
         v-for="(card, index) in cardList"
         :key="index"
       >
         <input
           ref="inputFrontEl"
-          class="p-2"
+          class="p-2 text-lg outline-none border-b-2 border-transparent focus:border-purple-600"
           v-model="card.front"
           placeholder="Frontside ..."
         />
-        <input class="p-2" v-model="card.back" placeholder="Backside ..." />
+        <input
+          class="p-2 text-lg outline-none border-b-2 border-transparent focus:border-purple-600"
+          v-model="card.back"
+          placeholder="Backside ..."
+        />
       </div>
-      <div class="grid grid-cols-2">
+      <div
+        class="grid grid-cols-2 gap-2 p-3 bg-white rounded-md shadow-sm focus-within:shadow-md"
+      >
         <input
           ref="inputFrontEl"
-          class="p-2"
+          class="p-2 text-lg outline-none border-b-2 border-transparent focus:border-purple-600"
           v-model="newCard.front"
           placeholder="Frontside ..."
           autofocus
         />
         <input
-          class="p-2"
+          class="p-2 text-lg outline-none border-b-2 border-transparent focus:border-purple-600"
           v-model="newCard.back"
           @keydown.enter="handleEnter"
           placeholder="Backside ..."
