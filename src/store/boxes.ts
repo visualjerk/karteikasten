@@ -1,5 +1,6 @@
 import { createGlobalState, MaybeComputedRef, useStorage } from '@vueuse/core'
-import { readonly, computed, unref } from 'vue'
+import { readonly, unref } from 'vue'
+import { cloneDeep } from 'lodash-es'
 
 export interface Card {
   front: string
@@ -49,17 +50,36 @@ export function useBoxes() {
     })
   }
 
+  function getById(id: MaybeComputedRef<number>) {
+    return all.value.find((box) => box.id === unref(id))
+  }
+
+  function get(id: MaybeComputedRef<number>) {
+    const box = getById(id)
+    if (!box) {
+      return null
+    }
+    return readonly(box)
+  }
+
+  function getCopy(id: MaybeComputedRef<number>) {
+    const box = getById(id)
+    if (!box) {
+      return null
+    }
+    return cloneDeep(box)
+  }
+
+  function set(box: Box) {
+    const index = all.value.findIndex((_box) => _box.id === box.id)
+    all.value[index] = box
+  }
+
   return {
     all: readonly(all),
+    get,
+    getCopy,
+    set,
     add,
-  }
-}
-
-export function useBox(id: MaybeComputedRef<number>) {
-  const all = useGlobalBoxesState()
-  const box = computed(() => all.value.find((box) => box.id === unref(id)))
-
-  return {
-    box,
   }
 }

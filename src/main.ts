@@ -13,6 +13,10 @@ const routes: RouteRecordRaw[] = [
     component: () => import('./views/Box.vue'),
   },
   {
+    path: '/box/:id/edit',
+    component: () => import('./views/BoxEdit.vue'),
+  },
+  {
     path: '/new-box',
     component: () => import('./views/NewBox.vue'),
   },

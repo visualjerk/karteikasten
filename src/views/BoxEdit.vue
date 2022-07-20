@@ -1,23 +1,30 @@
 <script setup lang="ts">
-import ActionButton from '../components/ActionButton.vue'
 import LinkButton from '../components/LinkButton.vue'
+import ActionButton from '../components/ActionButton.vue'
 import BoxCard from '../components/BoxCard.vue'
 import BoxCardInput from '../components/BoxCardInput.vue'
 
 import { nextTick, ref, onMounted, ComponentPublicInstance } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+
 import { useBoxes, Card } from '../store/boxes'
 
-const boxName = ref('My New Box')
+const { push } = useRouter()
+const route = useRoute()
+const { getCopy } = useBoxes()
+const box = ref(getCopy(Number(route.params.id)))
+
 const inputFrontEl = ref<ComponentPublicInstance>()
 const newCard = ref<Card>({ front: '', back: '' })
-const cardList = ref<Card[]>([])
 
 function addCard() {
   if (newCard.value.front === '' || newCard.value.back === '') {
     return
   }
-  cardList.value.push(newCard.value)
+  if (!box.value) {
+    return
+  }
+  box.value.cards.push(newCard.value)
 }
 
 async function handleEnter() {
@@ -27,15 +34,14 @@ async function handleEnter() {
   inputFrontEl.value?.$el.focus()
 }
 
-const { push } = useRouter()
-const { add } = useBoxes()
+const { set } = useBoxes()
 function save() {
+  if (!box.value) {
+    return
+  }
   addCard()
-  add({
-    name: boxName.value,
-    cards: cardList.value,
-  })
-  push('/')
+  set(box.value)
+  push(`/box/${box.value.id}`)
 }
 
 onMounted(() => {
@@ -44,10 +50,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="">
-    <input v-model="boxName" class="h1 mb-6 w-full bg-transparent" />
+  <h1 v-if="!box">Box not found</h1>
+  <div v-else>
+    <div class="flex justify-between items-center gap-3 mb-6">
+      <input v-model="box.name" class="h1 w-full bg-transparent" />
+    </div>
+
     <div class="grid gap-2 mb-4">
-      <BoxCard v-for="(card, index) in cardList" :key="index">
+      <BoxCard v-for="(card, index) in box.cards" :key="index">
         <BoxCardInput v-model="card.front" placeholder="Frontside ..." />
         <BoxCardInput v-model="card.back" placeholder="Backside ..." />
       </BoxCard>
@@ -66,8 +76,8 @@ onMounted(() => {
       </BoxCard>
     </div>
     <div class="flex gap-3 justify-between">
-      <ActionButton @click="save" primary>Save New Box</ActionButton>
-      <LinkButton to="/">Discard Box</LinkButton>
+      <ActionButton @click="save" primary>Save Changes</ActionButton>
+      <LinkButton :to="`/box/${box.id}`">Discard Changes</LinkButton>
     </div>
   </div>
 </template>

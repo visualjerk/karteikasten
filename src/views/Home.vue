@@ -7,13 +7,13 @@ const { all: boxes } = useBoxes()
 
 <template>
   <article class="text-lg text-slate-700">
-    <h1 class="text-3xl mb-4 text-slate-800">Learn words and more</h1>
+    <h1 class="mb-4">Atomic Learning</h1>
     <p class="mb-6">
-      This tool helps you learn things like vocabulary, formula and everything
-      else that fits on a card.
+      This tool helps you learn "atomic" things like vocabulary, formula and
+      everything else that fits on a card.
     </p>
 
-    <h2 class="text-2xl mb-4">Your Boxes</h2>
+    <h2 class="mb-4">Your Boxes</h2>
 
     <div class="grid grid-cols-2 gap-4">
       <RouterLink

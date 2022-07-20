@@ -3,7 +3,7 @@ import MenuItem from './components/MenuItem.vue'
 </script>
 
 <template>
-  <main class="min-h-screen bg-slate-50">
+  <div class="min-h-screen bg-slate-50">
     <header
       class="flex items-center gap-3 p-2 justify-between sticky top-0 z-10 bg-slate-50 border-b border-slate-200"
     >
@@ -20,16 +20,15 @@ import MenuItem from './components/MenuItem.vue'
         </div>
         <span class="font-bold text-purple-800 inline-block">Karteikasten</span>
         <span>|</span>
-        Learn words and more
+        Atomic Learning
       </router-link>
       <nav class="flex items-center gap-2">
         <MenuItem to="/">Intro</MenuItem>
-        <MenuItem to="/learn">Learn</MenuItem>
       </nav>
     </header>
 
-    <div class="flex flex-col items-center space-y-10 py-10 px-4">
+    <main class="py-10 px-4 max-w-screen-md m-auto">
       <router-view />
-    </div>
-  </main>
+    </main>
+  </div>
 </template>

@@ -1,28 +1,31 @@
 <script setup lang="ts">
+import LinkButton from '../components/LinkButton.vue'
+import BoxCard from '../components/BoxCard.vue'
+import BoxCardInput from '../components/BoxCardInput.vue'
+
 import { computed } from 'vue'
-import ActionButton from '../components/ActionButton.vue'
-import { useBox } from '../store/boxes'
 import { useRoute } from 'vue-router'
+import { useBoxes } from '../store/boxes'
 
 const route = useRoute()
-const { box } = useBox(computed(() => Number(route.params.id)))
+const { get } = useBoxes()
+const box = computed(() => get(Number(route.params.id)))
 </script>
 
 <template>
-  <div v-if="!box">Box not found</div>
-  <div v-else class="">
-    <h1 class="text-3xl mb-4 text-slate-800 w-full bg-transparent">
-      {{ box.name }}
-    </h1>
+  <h1 v-if="!box">Box not found</h1>
+  <div v-else>
+    <div class="flex justify-between items-center gap-3 mb-6">
+      <h1>
+        {{ box.name }}
+      </h1>
+      <LinkButton :to="`/box/${box.id}/edit`">Edit</LinkButton>
+    </div>
     <div class="grid gap-2 mb-4">
-      <div
-        class="grid grid-cols-2"
-        v-for="(card, index) in box.cards"
-        :key="index"
-      >
-        <input ref="inputFrontEl" class="p-2" v-model="card.front" readonly />
-        <input class="p-2" v-model="card.back" readonly />
-      </div>
+      <BoxCard v-for="(card, index) in box.cards" :key="index">
+        <BoxCardInput v-model="card.front" readonly />
+        <BoxCardInput v-model="card.back" readonly />
+      </BoxCard>
     </div>
   </div>
 </template>
