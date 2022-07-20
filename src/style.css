@@ -10,6 +10,9 @@
   h3,.h3 {
     @apply text-2xl text-slate-800 font-bold;
   }
+  p,.p {
+    @apply text-lg text-slate-700;
+  }
 }
 
 @tailwind components;

@@ -6,7 +6,7 @@ const { all: boxes } = useBoxes()
 </script>
 
 <template>
-  <article class="text-lg text-slate-700">
+  <article>
     <h1 class="mb-4">Atomic Learning</h1>
     <p class="mb-6">
       This tool helps you learn "atomic" things like vocabulary, formula and
@@ -14,7 +14,6 @@ const { all: boxes } = useBoxes()
     </p>
 
     <h2 class="mb-4">Your Boxes</h2>
-
     <div class="grid grid-cols-2 gap-4">
       <RouterLink
         to="/new-box"
@@ -32,7 +31,7 @@ const { all: boxes } = useBoxes()
         v-for="box in boxes"
         :key="box.id"
         :to="`/box/${box.id}`"
-        class="p-6 text-2xl bg-white shadow-md rounded-lg hover:shadow-lg text-center"
+        class="h-36 p-6 text-2xl bg-white shadow-md rounded-lg hover:shadow-lg flex items-center justify-center"
       >
         {{ box.name }}
       </RouterLink>
