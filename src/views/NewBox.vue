@@ -45,8 +45,8 @@ onMounted(() => {
 
 <template>
   <div class="">
-    <input v-model="boxName" class="h1 mb-6 w-full bg-transparent" />
-    <div class="grid gap-2 mb-4">
+    <input v-model="boxName" class="h1 mb-8 w-full bg-transparent" />
+    <div class="grid gap-2 mb-6">
       <BoxCard v-for="(card, index) in cardList" :key="index">
         <BoxCardInput v-model="card.front" placeholder="Frontside ..." />
         <BoxCardInput v-model="card.back" placeholder="Backside ..." />

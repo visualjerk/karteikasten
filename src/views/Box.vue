@@ -30,7 +30,7 @@ async function handleRemove() {
 <template>
   <h1 v-if="!box">Box not found</h1>
   <div v-else>
-    <div class="flex justify-between items-center gap-3 mb-6">
+    <div class="flex justify-between items-center gap-3 mb-8">
       <h1>
         {{ box.name }}
       </h1>
@@ -39,7 +39,7 @@ async function handleRemove() {
         <LinkButton :to="`/box/${box.id}/edit`">Edit</LinkButton>
       </div>
     </div>
-    <div class="grid gap-2 mb-4">
+    <div class="grid gap-2 mb-6">
       <BoxCard v-for="(card, index) in box.cards" :key="index">
         <BoxCardInput v-model="card.front" readonly />
         <BoxCardInput v-model="card.back" readonly />
