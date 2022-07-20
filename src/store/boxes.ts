@@ -41,6 +41,14 @@ const useGlobalBoxesState = createGlobalState(() =>
 export function useBoxes() {
   const all = useGlobalBoxesState()
 
+  function getById(id: MaybeComputedRef<number>) {
+    return all.value.find((box) => box.id === unref(id))
+  }
+
+  function getIndexById(id: MaybeComputedRef<number>) {
+    return all.value.findIndex((box) => box.id === unref(id))
+  }
+
   function add(box: NewBox) {
     const last = all.value.at(-1)
     const id = last ? last.id + 1 : 0
@@ -50,8 +58,14 @@ export function useBoxes() {
     })
   }
 
-  function getById(id: MaybeComputedRef<number>) {
-    return all.value.find((box) => box.id === unref(id))
+  function remove(id: MaybeComputedRef<number>) {
+    const index = getIndexById(id)
+    all.value.splice(index, 1)
+  }
+
+  function set(box: Box) {
+    const index = getIndexById(box.id)
+    all.value[index] = box
   }
 
   function get(id: MaybeComputedRef<number>) {
@@ -70,16 +84,12 @@ export function useBoxes() {
     return cloneDeep(box)
   }
 
-  function set(box: Box) {
-    const index = all.value.findIndex((_box) => _box.id === box.id)
-    all.value[index] = box
-  }
-
   return {
     all: readonly(all),
     get,
     getCopy,
-    set,
     add,
+    set,
+    remove,
   }
 }

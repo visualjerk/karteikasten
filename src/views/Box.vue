@@ -1,15 +1,30 @@
 <script setup lang="ts">
 import LinkButton from '../components/LinkButton.vue'
+import ActionButton from '../components/ActionButton.vue'
 import BoxCard from '../components/BoxCard.vue'
 import BoxCardInput from '../components/BoxCardInput.vue'
 
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, nextTick } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useBoxes } from '../store/boxes'
 
+const { push } = useRouter()
 const route = useRoute()
-const { get } = useBoxes()
+const { get, remove } = useBoxes()
 const box = computed(() => get(Number(route.params.id)))
+
+async function handleRemove() {
+  if (!box.value) {
+    return
+  }
+  const sure = confirm(`Do you really want to delete ${box.value.name}?`)
+  if (!sure) {
+    return
+  }
+  push('/')
+  await nextTick()
+  remove(box.value.id)
+}
 </script>
 
 <template>
@@ -19,7 +34,10 @@ const box = computed(() => get(Number(route.params.id)))
       <h1>
         {{ box.name }}
       </h1>
-      <LinkButton :to="`/box/${box.id}/edit`">Edit</LinkButton>
+      <div class="flex gap-3">
+        <ActionButton @click="handleRemove">Delete</ActionButton>
+        <LinkButton :to="`/box/${box.id}/edit`">Edit</LinkButton>
+      </div>
     </div>
     <div class="grid gap-2 mb-4">
       <BoxCard v-for="(card, index) in box.cards" :key="index">
