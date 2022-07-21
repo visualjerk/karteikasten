@@ -47,10 +47,12 @@ function isRelevant(cardState: CardState, addSuccessCount = 0) {
             seconds: LEARN_DURATION_DIFF * step,
           })
 
-    return (
+    if (
       hasLessSuccessThan(cardState, successCount) &&
       (!duration || isOlderThan(cardState.lastResponse, duration))
-    )
+    ) {
+      return true
+    }
   }
   return false
 }
