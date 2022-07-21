@@ -3,6 +3,7 @@ import LinkButton from '@/components/LinkButton.vue'
 import ActionButton from '@/components/ActionButton.vue'
 import QuestionCard from '@/components/QuestionCard.vue'
 
+import { wait } from '@/utils/wait'
 import { Box } from '@/store/boxes'
 import { useSession } from '@/store/sessions'
 
@@ -10,7 +11,18 @@ const props = defineProps<{
   box: Box
 }>()
 
-const { nextCard, currentCard } = useSession(props.box)
+const { currentCard, addError, addSuccess, nextCard } = useSession(props.box)
+
+async function handleSuccess() {
+  addSuccess()
+  await wait(1000)
+  nextCard()
+}
+
+function handleError() {
+  addError()
+  nextCard()
+}
 </script>
 
 <template>
@@ -23,8 +35,8 @@ const { nextCard, currentCard } = useSession(props.box)
     </div>
     <div>
       <div class="grid gap-5 mb-6">
-        <QuestionCard :card="currentCard" />
-        <ActionButton primary size="large" @click="nextCard">
+        <QuestionCard :card="currentCard" @success="handleSuccess" />
+        <ActionButton primary size="large" @click="handleError">
           Don't know
         </ActionButton>
       </div>

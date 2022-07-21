@@ -11,11 +11,13 @@
   "dependencies": {
     "@vueuse/core": "^8.9.3",
     "lodash-es": "^4.17.21",
+    "luxon": "^3.0.1",
     "vue": "^3.2.37",
     "vue-router": "4"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.6",
+    "@types/luxon": "^3.0.0",
     "@types/node": "^18.0.6",
     "@vitejs/plugin-vue": "^3.0.0",
     "autoprefixer": "^10.4.7",
