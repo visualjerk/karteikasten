@@ -54,7 +54,9 @@ async function handleRemove() {
       Add cards to this box
     </router-link>
     <div v-else>
-      <div class="grid sm:grid-cols-2 gap-5 py-4 mb-10">
+      <div
+        class="grid sm:grid-cols-2 gap-5 p-5 md:p-7 mb-10 bg-slate-100 rounded-lg border border-slate-200"
+      >
         <LinkButton primary size="large" :to="`/box/${box.id}/learn`">
           <svg
             style="width: 24px; height: 24px"

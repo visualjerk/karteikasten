@@ -7,28 +7,25 @@ import BoxCardInput from '@/components/BoxCardInput.vue'
 import { nextTick, ref, onMounted, ComponentPublicInstance } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { useBoxes, Card, Box } from '@/store/boxes'
+import { useBoxes, NewCard, Box } from '@/store/boxes'
 
 const props = defineProps<{
   box: Box
 }>()
 
 const { push } = useRouter()
-const { getCopy } = useBoxes()
+const { getCopy, addCardToBox } = useBoxes()
 // We can savely assume that box exists, as we got it as a router-view prop
 const boxCopy = ref(getCopy(props.box.id) as Box)
 
 const inputFrontEl = ref<ComponentPublicInstance>()
-const newCard = ref<Card>({ front: '', back: '' })
+const newCard = ref<NewCard>({ front: '', back: '' })
 
 function addCard() {
-  if (newCard.value.front === '' || newCard.value.back === '') {
-    return
-  }
   if (!boxCopy.value) {
     return
   }
-  boxCopy.value.cards.push(newCard.value)
+  addCardToBox(boxCopy.value, newCard.value)
 }
 
 async function handleEnter() {

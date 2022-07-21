@@ -5,7 +5,7 @@ import { useBoxes } from '@/store/boxes'
 
 const route = useRoute()
 const { get } = useBoxes()
-const box = computed(() => get(Number(route.params.id)))
+const box = computed(() => get(route.params.id as string))
 </script>
 
 <template>

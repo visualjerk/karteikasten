@@ -6,12 +6,12 @@ import BoxCardInput from '@/components/BoxCardInput.vue'
 
 import { nextTick, ref, onMounted, ComponentPublicInstance } from 'vue'
 import { useRouter } from 'vue-router'
-import { useBoxes, Card } from '@/store/boxes'
+import { useBoxes, NewCard } from '@/store/boxes'
 
 const boxName = ref('My New Box')
 const inputFrontEl = ref<ComponentPublicInstance>()
-const newCard = ref<Card>({ front: '', back: '' })
-const cardList = ref<Card[]>([])
+const newCard = ref<NewCard>({ front: '', back: '' })
+const cardList = ref<NewCard[]>([])
 
 function addCard() {
   if (newCard.value.front === '' || newCard.value.back === '') {
