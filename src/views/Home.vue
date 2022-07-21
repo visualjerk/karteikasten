@@ -13,7 +13,7 @@ const { all: boxes } = useBoxes()
     </p>
 
     <h2 class="mb-4">Your Boxes</h2>
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid sm:grid-cols-2 gap-4">
       <RouterLink
         to="/new-box"
         class="p-6 text-2xl border border-dashed rounded-lg hover:shadow-lg flex items-center justify-center gap-2"
@@ -30,7 +30,7 @@ const { all: boxes } = useBoxes()
         v-for="box in boxes"
         :key="box.id"
         :to="`/box/${box.id}`"
-        class="h-36 p-6 text-2xl bg-white shadow-md rounded-lg hover:shadow-lg flex items-center justify-center"
+        class="sm:h-36 p-6 text-2xl bg-white shadow-md rounded-lg hover:shadow-lg flex items-center justify-center"
       >
         {{ box.name }}
       </RouterLink>

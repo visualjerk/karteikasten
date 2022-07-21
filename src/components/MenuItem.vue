@@ -11,8 +11,9 @@ defineProps<{
     <a
       :href="href"
       @click="navigate"
-      class="px-4 py-1 flex hover:text-purple-800 font-medium"
+      class="px-4 py-1 hover:text-purple-800 font-medium"
       :class="[isExactActive ? 'text-purple-700' : 'text-slate-400']"
+      v-bind="$attrs"
       ><slot
     /></a>
   </router-link>

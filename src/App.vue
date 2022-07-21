@@ -9,7 +9,7 @@ import MenuItem from '@/components/MenuItem.vue'
     >
       <router-link to="/" class="text-purple-600 flex gap-1 items-center pl-2">
         <div
-          class="bg-purple-800 h-7 w-7 flex items-center justify-center mr-1 rounded-full text-purple-300"
+          class="bg-purple-800 h-7 w-7 flex items-center shrink-0 justify-center mr-1 rounded-full text-purple-300"
         >
           <svg style="width: 20px" viewBox="0 0 24 24">
             <path
@@ -23,7 +23,7 @@ import MenuItem from '@/components/MenuItem.vue'
         Atomic Learning
       </router-link>
       <nav class="flex items-center gap-2">
-        <MenuItem to="/">Your Boxes</MenuItem>
+        <MenuItem to="/" class="hidden sm:block">Your Boxes</MenuItem>
         <a
           href="https://github.com/visualjerk/karteikasten"
           class="flex px-2 py-1 text-slate-600 hover:text-slate-800"
@@ -40,7 +40,7 @@ import MenuItem from '@/components/MenuItem.vue'
       </nav>
     </header>
 
-    <main class="py-10 px-4 max-w-screen-md m-auto">
+    <main class="py-6 sm:py-10 px-4 max-w-screen-md m-auto">
       <router-view />
     </main>
   </div>
