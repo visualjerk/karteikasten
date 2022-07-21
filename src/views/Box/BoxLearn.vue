@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import LinkButton from '@/components/LinkButton.vue'
-import ActionButton from '@/components/ActionButton.vue'
 import QuestionCard from '@/components/QuestionCard.vue'
 
+import { nextTick, ref } from 'vue'
 import { wait } from '@/utils/wait'
 import { Box } from '@/store/boxes'
 import { useSession } from '@/store/sessions'
@@ -11,17 +11,28 @@ const props = defineProps<{
   box: Box
 }>()
 
+const showBack = ref(false)
+const boxEl = ref()
 const { currentCard, addError, addSuccess, nextCard } = useSession(props.box)
 
 async function handleSuccess() {
   addSuccess()
   await wait(1000)
   nextCard()
+  await nextTick()
+  boxEl.value.reset()
 }
 
 function handleError() {
   addError()
+  showBack.value = true
+}
+
+async function handleSkip() {
+  showBack.value = false
   nextCard()
+  await nextTick()
+  boxEl.value.reset()
 }
 </script>
 
@@ -30,15 +41,31 @@ function handleError() {
     <div class="flex justify-between items-center gap-3 mb-8">
       <h1>{{ box.name }}</h1>
       <div class="flex gap-3">
-        <LinkButton :to="`/box/${box.id}`">Stop Learning</LinkButton>
+        <LinkButton :to="`/box/${box.id}`">
+          <svg
+            style="width: 24px; height: 24px"
+            viewBox="0 0 24 24"
+            class="mr-2"
+          >
+            <path
+              fill="currentColor"
+              d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4M9,9V15H15V9"
+            />
+          </svg>
+          Stop Learning
+        </LinkButton>
       </div>
     </div>
     <div>
       <div class="grid gap-5 mb-6">
-        <QuestionCard :card="currentCard" @success="handleSuccess" />
-        <ActionButton primary size="large" @click="handleError">
-          Don't know
-        </ActionButton>
+        <QuestionCard
+          ref="boxEl"
+          :card="currentCard"
+          :show-back="showBack"
+          @success="handleSuccess"
+          @error="handleError"
+          @skip="handleSkip"
+        />
       </div>
     </div>
   </div>
