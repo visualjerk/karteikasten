@@ -6,9 +6,9 @@ const sizeClassesOptions = {
   large: 'px-8 py-3 text-lg',
 }
 
-export type SizeClassKey = keyof typeof sizeClassesOptions
+type SizeClassKey = keyof typeof sizeClassesOptions
 
-interface ButtonStyleProps {
+export interface ButtonStyleProps {
   primary?: boolean
   size?: SizeClassKey
 }

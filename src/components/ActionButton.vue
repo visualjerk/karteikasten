@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import {
   useButtonStyleClasses,
-  SizeClassKey,
+  ButtonStyleProps,
 } from '../hooks/use-button-style-classes'
 
-const props = defineProps<{
-  primary?: boolean
-  size?: SizeClassKey
-}>()
+interface ButtonProps extends ButtonStyleProps {}
 
+const props = defineProps<ButtonProps>()
 const classes = useButtonStyleClasses(props)
 </script>
 

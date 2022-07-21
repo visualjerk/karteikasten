@@ -2,15 +2,14 @@
 import { RouteLocationRaw } from 'vue-router'
 import {
   useButtonStyleClasses,
-  SizeClassKey,
+  ButtonStyleProps,
 } from '../hooks/use-button-style-classes'
 
-const props = defineProps<{
+interface ButtonProps extends ButtonStyleProps {
   to: RouteLocationRaw
-  primary?: boolean
-  size?: SizeClassKey
-}>()
+}
 
+const props = defineProps<ButtonProps>()
 const classes = useButtonStyleClasses(props)
 </script>
 
