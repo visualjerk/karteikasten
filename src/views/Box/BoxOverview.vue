@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import LinkButton from '@/components/LinkButton.vue'
 import ActionButton from '@/components/ActionButton.vue'
-import BoxCard from '@/components/BoxCard.vue'
-import BoxCardInput from '@/components/BoxCardInput.vue'
+import OverviewCard from '@/components/OverviewCard.vue'
 
 import { nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { Box, useBoxes } from '@/store/boxes'
+import { useSession } from '@/store/sessions'
 
 const props = defineProps<{
   box: Box
@@ -14,6 +14,7 @@ const props = defineProps<{
 
 const { push } = useRouter()
 const { remove } = useBoxes()
+const { reset, getCardState } = useSession(props.box)
 
 async function handleRemove() {
   if (!props.box) {
@@ -70,13 +71,17 @@ async function handleRemove() {
           </svg>
           Start Learning
         </LinkButton>
-        <ActionButton size="large"> Reset Learning Progress </ActionButton>
+        <ActionButton @click="reset" size="large">
+          Reset Learning Progress
+        </ActionButton>
       </div>
-      <div class="grid gap-2 mb-6">
-        <BoxCard v-for="(card, index) in box.cards" :key="index">
-          <BoxCardInput :model-value="card.front" readonly />
-          <BoxCardInput :model-value="card.back" readonly />
-        </BoxCard>
+      <div class="grid sm:grid-cols-2 gap-5 mb-6">
+        <OverviewCard
+          v-for="(card, index) in box.cards"
+          :card="card"
+          :cardState="getCardState(card)"
+          :key="index"
+        />
       </div>
     </div>
   </div>

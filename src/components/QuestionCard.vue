@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Card } from '@/store/boxes'
-import { ref, unref, computed, watch } from 'vue'
+import { ref, unref, computed, watch, onMounted } from 'vue'
 
 const inputEl = ref()
 const props = defineProps<{
@@ -11,19 +11,16 @@ const emit = defineEmits<{
 }>()
 
 const answer = ref('')
-const hasCorrectAnswer = computed(() => unref(answer) === props.card.back)
+const hasCorrectAnswer = computed(
+  () => unref(answer).toLowerCase() === props.card.back.toLowerCase()
+)
 watch(hasCorrectAnswer, (value) => {
   if (value) {
     emit('success')
   }
 })
 
-watch(
-  () => props.card,
-  () => {
-    answer.value = ''
-  }
-)
+watch(() => props.card, reset)
 
 function reset() {
   answer.value = ''
@@ -33,6 +30,8 @@ function reset() {
 defineExpose({
   reset,
 })
+
+onMounted(reset)
 </script>
 
 <template>

@@ -5,15 +5,13 @@ import QuestionCard from '@/components/QuestionCard.vue'
 
 import { wait } from '@/utils/wait'
 import { Box } from '@/store/boxes'
-import { useSession, isRelevant } from '@/store/sessions'
+import { useSession } from '@/store/sessions'
 
 const props = defineProps<{
   box: Box
 }>()
 
-const { currentCard, addError, addSuccess, nextCard, sessions } = useSession(
-  props.box
-)
+const { currentCard, addError, addSuccess, nextCard } = useSession(props.box)
 
 async function handleSuccess() {
   addSuccess()
@@ -42,22 +40,6 @@ function handleError() {
           Don't know
         </ActionButton>
       </div>
-    </div>
-    <div>
-      <p v-for="card in box.cards" :key="card.id">
-        {{ card.front }}: success:
-        {{ sessions[box.id].cardStates[card.id].successCount }} | error:
-        {{ sessions[box.id].cardStates[card.id].errorCount }} | seconds ago:
-        {{
-          (new Date().getTime() -
-            new Date(
-              sessions[box.id].cardStates[card.id].lastResponse
-            ).getTime()) /
-          1000
-        }}
-        s |
-        {{ isRelevant(sessions[box.id].cardStates[card.id]) && 'relevant' }}
-      </p>
     </div>
   </div>
 </template>

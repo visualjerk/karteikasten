@@ -1,6 +1,5 @@
-import { createGlobalState, MaybeComputedRef, useStorage } from '@vueuse/core'
-import { readonly, unref, ref, computed } from 'vue'
-import { cloneDeep } from 'lodash-es'
+import { createGlobalState, useStorage } from '@vueuse/core'
+import { readonly, ref } from 'vue'
 import { DateTime, Duration, DurationLikeObject } from 'luxon'
 import type { Box, Card } from './boxes'
 
@@ -34,7 +33,7 @@ function hasLessSuccess(cardState: CardState, diff: number) {
   return cardState.errorCount > cardState.successCount - diff
 }
 
-export function isRelevant(cardState: CardState, addSuccessDiff = 0) {
+function isRelevant(cardState: CardState, addSuccessDiff = 0) {
   for (let step = 1; step < 5; step++) {
     if (!cardState.lastResponse) {
       return true
@@ -72,6 +71,11 @@ export function useSession(box: Box) {
     return session
   }
 
+  function reset() {
+    const session = getSession()
+    session.cardStates = {}
+  }
+
   function getCardState(card?: Card) {
     const id = card?.id || currentCard.value.id
     const session = getSession()
@@ -90,7 +94,7 @@ export function useSession(box: Box) {
 
   function getCardsToLearn(successDiffAdd = 0): Card[] {
     if (!box.cards.length) {
-      throw new Error(`No Cards In Box ${box.name}`)
+      return []
     }
 
     const cards = box.cards.filter((card) => {
@@ -139,9 +143,10 @@ export function useSession(box: Box) {
 
   return {
     currentCard: readonly(currentCard),
+    getCardState,
     nextCard,
     addSuccess,
     addError,
-    sessions,
+    reset,
   }
 }
