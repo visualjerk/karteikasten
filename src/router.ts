@@ -10,7 +10,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/Box/Box.vue'),
     children: [
       {
-        path: 'overview',
+        path: '',
         component: () => import('@/views/Box/BoxOverview.vue'),
       },
       {

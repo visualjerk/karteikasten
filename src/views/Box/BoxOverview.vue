@@ -55,7 +55,7 @@ async function handleRemove() {
     </router-link>
     <div v-else>
       <div class="grid sm:grid-cols-2 gap-5 py-4 mb-10">
-        <ActionButton primary size="large">
+        <LinkButton primary size="large" :to="`/box/${box.id}/learn`">
           <svg
             style="width: 24px; height: 24px"
             viewBox="0 0 24 24"
@@ -67,7 +67,7 @@ async function handleRemove() {
             />
           </svg>
           Start Learning
-        </ActionButton>
+        </LinkButton>
         <ActionButton size="large"> Reset Learning Progress </ActionButton>
       </div>
       <div class="grid gap-2 mb-6">

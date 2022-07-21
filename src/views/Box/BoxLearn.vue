@@ -32,7 +32,7 @@ async function handleRemove() {
 <template>
   <div>
     <div class="flex justify-between items-center gap-3 mb-8">
-      <h1>{{ box.name }} - Learn</h1>
+      <h1>{{ box.name }}</h1>
       <div class="flex gap-3">
         <ActionButton @click="handleRemove">Delete</ActionButton>
         <LinkButton :to="`/box/${box.id}/edit`">Edit</LinkButton>
