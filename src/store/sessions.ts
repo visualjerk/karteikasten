@@ -1,18 +1,20 @@
 import { createGlobalState, MaybeComputedRef, useStorage } from '@vueuse/core'
 import { readonly, unref, ref, computed } from 'vue'
 import { cloneDeep } from 'lodash-es'
-import { DateTime } from 'luxon'
+import { DateTime, Duration, DurationLikeObject } from 'luxon'
 import type { Box, Card } from './boxes'
 
 export interface CardState {
   successCount: number
   errorCount: number
-  lastResponse: string
+  lastResponse?: string
 }
 
 export interface Session {
   cardStates: Record<string, CardState>
 }
+
+const LEARN_DURATION_DIFF = 30
 
 const useGlobalSessionState = createGlobalState(() =>
   useStorage<Record<string, Session>>('karteikasten-sessions', {})
@@ -20,6 +22,38 @@ const useGlobalSessionState = createGlobalState(() =>
 
 function getCurrentDate() {
   return DateTime.now().toString()
+}
+
+function isOlderThan(date: string, duration: DurationLikeObject) {
+  return (
+    DateTime.now().diff(DateTime.fromISO(date)).minus(duration).toMillis() > 0
+  )
+}
+
+function hasLessSuccess(cardState: CardState, diff: number) {
+  return cardState.errorCount > cardState.successCount - diff
+}
+
+export function isRelevant(cardState: CardState, addSuccessDiff = 0) {
+  for (let step = 1; step < 5; step++) {
+    if (!cardState.lastResponse) {
+      return true
+    }
+
+    const successDiff = step + addSuccessDiff
+    const duration =
+      step === 1
+        ? null
+        : Duration.fromDurationLike({
+            seconds: LEARN_DURATION_DIFF * step,
+          })
+
+    return (
+      hasLessSuccess(cardState, successDiff) &&
+      (!duration || isOlderThan(cardState.lastResponse, duration))
+    )
+  }
+  return false
 }
 
 export function useSession(box: Box) {
@@ -38,27 +72,57 @@ export function useSession(box: Box) {
     return session
   }
 
-  function getCardState() {
+  function getCardState(card?: Card) {
+    const id = card?.id || currentCard.value.id
     const session = getSession()
-    let cardState = session.cardStates[currentCard.value.id]
+    let cardState = session.cardStates[id]
 
     if (!cardState) {
       cardState = {
         successCount: 0,
         errorCount: 0,
-        lastResponse: getCurrentDate(),
       }
-      session.cardStates[currentCard.value.id] = cardState
+      session.cardStates[id] = cardState
     }
 
     return cardState
   }
 
-  const currentCardIndex = ref(0)
-  const currentCard = computed(() => box.cards[currentCardIndex.value])
+  function getCardsToLearn(successDiffAdd = 0): Card[] {
+    if (!box.cards.length) {
+      throw new Error(`No Cards In Box ${box.name}`)
+    }
+
+    const cards = box.cards.filter((card) => {
+      const cardState = getCardState(card)
+
+      return isRelevant(cardState, successDiffAdd)
+    })
+
+    if (cards.length) {
+      return cards
+    }
+    return getCardsToLearn(successDiffAdd + 1)
+  }
+
+  let lastCardIndex = 0
+  const currentCard = ref(getCardsToLearn()[0])
 
   function nextCard(): void {
-    currentCardIndex.value = (currentCardIndex.value + 1) % box.cards.length
+    const cards = getCardsToLearn()
+    let nextCard = cards[lastCardIndex]
+
+    if (!nextCard) {
+      nextCard = cards[0]
+    }
+
+    if (currentCard.value.id !== nextCard?.id) {
+      currentCard.value = nextCard
+      return
+    }
+
+    lastCardIndex = (lastCardIndex + 1) % cards.length
+    currentCard.value = cards[lastCardIndex]
   }
 
   function addSuccess(): void {
@@ -78,5 +142,6 @@ export function useSession(box: Box) {
     nextCard,
     addSuccess,
     addError,
+    sessions,
   }
 }
