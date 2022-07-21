@@ -4,6 +4,7 @@ import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/karteikasten/',
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),

@@ -7,16 +7,12 @@ defineProps<{
 </script>
 
 <template>
-  <router-link
-    :to="to"
-    custom
-    v-slot="{ href, route, navigate, isActive, isExactActive }"
-  >
+  <router-link :to="to" custom v-slot="{ href, navigate, isExactActive }">
     <a
       :href="href"
       @click="navigate"
-      class="px-4 py-1 flex rounded-md hover:text-purple-700 font-medium"
-      :class="[isExactActive ? 'text-purple-800' : 'text-slate-400']"
+      class="px-4 py-1 flex hover:text-purple-800 font-medium"
+      :class="[isExactActive ? 'text-purple-700' : 'text-slate-400']"
       ><slot
     /></a>
   </router-link>

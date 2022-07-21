@@ -31,17 +31,43 @@ const defaultBoxes: Box[] = [
   {
     id: '0',
     name: 'German',
-    cards: [],
-  },
-  {
-    id: '1',
-    name: 'Spain',
-    cards: [],
-  },
-  {
-    id: '2',
-    name: 'JS Syntax',
-    cards: [],
+    cards: [
+      {
+        id: '0',
+        front: 'Buch',
+        back: 'Book',
+      },
+      {
+        id: '1',
+        front: 'Hallo',
+        back: 'Hello',
+      },
+      {
+        id: '2',
+        front: 'Liebe',
+        back: 'Love',
+      },
+      {
+        id: '3',
+        front: 'Vogel',
+        back: 'Bird',
+      },
+      {
+        id: '4',
+        front: 'Du',
+        back: 'You',
+      },
+      {
+        id: '5',
+        front: 'Gut',
+        back: 'Good',
+      },
+      {
+        id: '6',
+        front: 'Lied',
+        back: 'Song',
+      },
+    ],
   },
 ]
 
