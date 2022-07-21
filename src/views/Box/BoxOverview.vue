@@ -28,6 +28,16 @@ async function handleRemove() {
   await nextTick()
   remove(props.box.id)
 }
+
+async function handleReset() {
+  const sure = confirm(
+    `Do you really want to reset the learning state for ${props.box.name}?`
+  )
+  if (!sure) {
+    return
+  }
+  reset()
+}
 </script>
 
 <template>
@@ -71,7 +81,7 @@ async function handleRemove() {
           </svg>
           Start Learning
         </LinkButton>
-        <ActionButton @click="reset" size="large">
+        <ActionButton @click="handleReset" size="large">
           Reset Learning Progress
         </ActionButton>
       </div>
