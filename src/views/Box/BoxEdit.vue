@@ -1,18 +1,22 @@
 <script setup lang="ts">
-import LinkButton from '../components/LinkButton.vue'
-import ActionButton from '../components/ActionButton.vue'
-import BoxCard from '../components/BoxCard.vue'
-import BoxCardInput from '../components/BoxCardInput.vue'
+import LinkButton from '@/components/LinkButton.vue'
+import ActionButton from '@/components/ActionButton.vue'
+import BoxCard from '@/components/BoxCard.vue'
+import BoxCardInput from '@/components/BoxCardInput.vue'
 
 import { nextTick, ref, onMounted, ComponentPublicInstance } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
-import { useBoxes, Card } from '../store/boxes'
+import { useBoxes, Card, Box } from '@/store/boxes'
+
+const props = defineProps<{
+  box: Box
+}>()
 
 const { push } = useRouter()
-const route = useRoute()
 const { getCopy } = useBoxes()
-const box = ref(getCopy(Number(route.params.id)))
+// We can savely assume that box exists, as we got it as a router-view prop
+const boxCopy = ref(getCopy(props.box.id) as Box)
 
 const inputFrontEl = ref<ComponentPublicInstance>()
 const newCard = ref<Card>({ front: '', back: '' })
@@ -21,10 +25,10 @@ function addCard() {
   if (newCard.value.front === '' || newCard.value.back === '') {
     return
   }
-  if (!box.value) {
+  if (!boxCopy.value) {
     return
   }
-  box.value.cards.push(newCard.value)
+  boxCopy.value.cards.push(newCard.value)
 }
 
 async function handleEnter() {
@@ -36,12 +40,12 @@ async function handleEnter() {
 
 const { set } = useBoxes()
 function save() {
-  if (!box.value) {
+  if (!boxCopy.value) {
     return
   }
   addCard()
-  set(box.value)
-  push(`/box/${box.value.id}`)
+  set(boxCopy.value)
+  push(`/box/${boxCopy.value.id}`)
 }
 
 onMounted(() => {
@@ -50,11 +54,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1 v-if="!box">Box not found</h1>
-  <div v-else>
-    <input v-model="box.name" class="h1 w-full bg-transparent mb-8" />
+  <div>
+    <input v-model="boxCopy.name" class="h1 w-full bg-transparent mb-8" />
     <div class="grid gap-2 mb-6">
-      <BoxCard v-for="(card, index) in box.cards" :key="index">
+      <BoxCard v-for="(card, index) in boxCopy.cards" :key="index">
         <BoxCardInput v-model="card.front" placeholder="Frontside ..." />
         <BoxCardInput v-model="card.back" placeholder="Backside ..." />
       </BoxCard>
@@ -74,7 +77,7 @@ onMounted(() => {
     </div>
     <div class="flex gap-3 justify-between">
       <ActionButton @click="save" primary>Save Changes</ActionButton>
-      <LinkButton :to="`/box/${box.id}`">Discard Changes</LinkButton>
+      <LinkButton :to="`/box/${boxCopy.id}`">Discard Changes</LinkButton>
     </div>
   </div>
 </template>

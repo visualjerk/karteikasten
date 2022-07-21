@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import ActionButton from '../components/ActionButton.vue'
-import LinkButton from '../components/LinkButton.vue'
-import BoxCard from '../components/BoxCard.vue'
-import BoxCardInput from '../components/BoxCardInput.vue'
+import ActionButton from '@/components/ActionButton.vue'
+import LinkButton from '@/components/LinkButton.vue'
+import BoxCard from '@/components/BoxCard.vue'
+import BoxCardInput from '@/components/BoxCardInput.vue'
 
 import { nextTick, ref, onMounted, ComponentPublicInstance } from 'vue'
 import { useRouter } from 'vue-router'
-import { useBoxes, Card } from '../store/boxes'
+import { useBoxes, Card } from '@/store/boxes'
 
 const boxName = ref('My New Box')
 const inputFrontEl = ref<ComponentPublicInstance>()

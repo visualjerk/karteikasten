@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import LinkButton from '../components/LinkButton.vue'
-import { useBoxes } from '../store/boxes'
+import { useBoxes } from '@/store/boxes'
 
 const { all: boxes } = useBoxes()
 </script>

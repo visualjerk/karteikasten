@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, unref, computed, watch } from 'vue'
-import { DICTIONARY } from '../constants/dictionary'
+import { DICTIONARY } from '@/constants/dictionary'
 
 const inputEl = ref()
 const props = defineProps<{

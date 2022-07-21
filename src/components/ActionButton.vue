@@ -2,7 +2,7 @@
 import {
   useButtonStyleClasses,
   ButtonStyleProps,
-} from '../hooks/use-button-style-classes'
+} from '@/hooks/use-button-style-classes'
 
 interface ButtonProps extends ButtonStyleProps {}
 

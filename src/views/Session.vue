@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { nextTick, ref, unref, computed } from 'vue'
-import { STORAGE_KEY, DICTIONARY } from '../constants/dictionary'
-import { useSession } from '../hooks/use-session'
-import { useTimer } from '../hooks/use-timer'
-import QuestionBox from '../components/QuestionBox.vue'
-import ActionButton from '../components/ActionButton.vue'
+import { STORAGE_KEY, DICTIONARY } from '@/constants/dictionary'
+import { useSession } from '@/hooks/use-session'
+import { useTimer } from '@/hooks/use-timer'
+import QuestionBox from '@/components/QuestionBox.vue'
+import ActionButton from '@/components/ActionButton.vue'
 
 const boxRef = ref()
 const { current, next, addError, results } = useSession(STORAGE_KEY, DICTIONARY)
