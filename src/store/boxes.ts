@@ -7,7 +7,7 @@ import {
 import { readonly, unref } from 'vue'
 import { cloneDeep } from 'lodash-es'
 
-interface IdItem {
+export interface IdItem {
   id: string
 }
 
