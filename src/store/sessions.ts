@@ -29,17 +29,17 @@ function isOlderThan(date: string, duration: DurationLikeObject) {
   )
 }
 
-function hasLessSuccess(cardState: CardState, diff: number) {
-  return cardState.errorCount > cardState.successCount - diff
+function hasLessSuccessThan(cardState: CardState, successCount: number) {
+  return cardState.successCount < successCount
 }
 
-function isRelevant(cardState: CardState, addSuccessDiff = 0) {
+function isRelevant(cardState: CardState, addSuccessCount = 0) {
   for (let step = 1; step < 5; step++) {
     if (!cardState.lastResponse) {
       return true
     }
 
-    const successDiff = step + addSuccessDiff
+    const successCount = step + addSuccessCount
     const duration =
       step === 1
         ? null
@@ -48,7 +48,7 @@ function isRelevant(cardState: CardState, addSuccessDiff = 0) {
           })
 
     return (
-      hasLessSuccess(cardState, successDiff) &&
+      hasLessSuccessThan(cardState, successCount) &&
       (!duration || isOlderThan(cardState.lastResponse, duration))
     )
   }
