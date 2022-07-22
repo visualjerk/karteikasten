@@ -2,8 +2,14 @@ import { PrismaClient } from '@prisma/client'
 import { Octokit } from 'octokit'
 import { User } from '@/types/user'
 
+let prisma: PrismaClient
+
 async function callPrisma<T>(callback: (prisma: PrismaClient) => Promise<T>) {
-  const prisma = new PrismaClient()
+  if (!prisma) {
+    prisma = new PrismaClient()
+  } else {
+    prisma.$connect()
+  }
   try {
     return await callback(prisma)
   } catch (e) {
