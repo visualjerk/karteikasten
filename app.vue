@@ -31,8 +31,8 @@ useHead({
           </svg>
         </div>
         <span class="font-bold text-purple-800 inline-block">Karteikasten</span>
-        <span>|</span>
-        Atomic Learning
+        <span class="hidden sm:inline">|</span>
+        <span class="hidden sm:inline">Atomic Learning</span>
       </NuxtLink>
       <nav class="flex items-center gap-2">
         <MenuItem to="/" class="hidden sm:block">Your Boxes</MenuItem>
