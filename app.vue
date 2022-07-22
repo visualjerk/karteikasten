@@ -2,11 +2,11 @@
 import MenuItem from '@/components/MenuItem.vue'
 import ActionButton from '@/components/ActionButton.vue'
 
-import { login, logout, getUser } from '@/hooks/use-auth'
+import { getUser, login, logout } from '@/store/auth'
 
 const user = useState('user')
 
-await getUser()
+getUser()
 
 useHead({
   title: 'Karteikasten | Atomic Learning',
@@ -38,7 +38,10 @@ useHead({
         <ActionButton @click="login" size="small" v-if="!user">
           Login
         </ActionButton>
-        <ActionButton @click="logout" size="small" v-else>Logout</ActionButton>
+        <ActionButton @click="logout" size="small" v-else>
+          {{ user.email }}
+          Logout
+        </ActionButton>
         <a
           href="https://github.com/visualjerk/karteikasten"
           class="flex px-2 py-1 text-slate-600 hover:text-slate-800"
