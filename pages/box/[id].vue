@@ -9,6 +9,8 @@ const box = computed(() => get(route.params.id as string))
 </script>
 
 <template>
-  <h1 v-if="!box">Box not found</h1>
-  <router-view v-else :box="box" />
+  <article>
+    <h1 v-if="!box">Box not found</h1>
+    <NuxtPage v-else :box="box" />
+  </article>
 </template>

@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import MenuItem from '@/components/MenuItem.vue'
+
+useHead({
+  title: 'Karteikasten | Atomic Learning',
+})
 </script>
 
 <template>
@@ -7,7 +11,7 @@ import MenuItem from '@/components/MenuItem.vue'
     <header
       class="flex items-center gap-3 p-2 justify-between sticky top-0 z-10 bg-slate-50 border-b border-slate-200"
     >
-      <router-link to="/" class="text-purple-600 flex gap-1 items-center pl-2">
+      <NuxtLink to="/" class="text-purple-600 flex gap-1 items-center pl-2">
         <div
           class="bg-purple-800 h-7 w-7 flex items-center shrink-0 justify-center mr-1 rounded-full text-purple-300"
         >
@@ -21,7 +25,7 @@ import MenuItem from '@/components/MenuItem.vue'
         <span class="font-bold text-purple-800 inline-block">Karteikasten</span>
         <span>|</span>
         Atomic Learning
-      </router-link>
+      </NuxtLink>
       <nav class="flex items-center gap-2">
         <MenuItem to="/" class="hidden sm:block">Your Boxes</MenuItem>
         <a
@@ -41,7 +45,7 @@ import MenuItem from '@/components/MenuItem.vue'
     </header>
 
     <main class="py-6 sm:py-10 px-4 max-w-screen-md m-auto">
-      <router-view />
+      <NuxtPage />
     </main>
   </div>
 </template>

@@ -44,7 +44,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="">
+  <article>
     <input v-model="boxName" class="h1 mb-8 w-full bg-transparent" />
     <div class="grid gap-2 mb-6">
       <BoxCard v-for="(card, index) in cardList" :key="index">
@@ -69,5 +69,5 @@ onMounted(() => {
       <ActionButton @click="save" primary>Save New Box</ActionButton>
       <LinkButton to="/">Discard Box</LinkButton>
     </div>
-  </div>
+  </article>
 </template>

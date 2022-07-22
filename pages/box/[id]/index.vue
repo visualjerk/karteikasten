@@ -65,7 +65,7 @@ async function handleReset() {
         </LinkButton>
       </div>
     </div>
-    <router-link
+    <NuxtLink
       v-if="!box.cards.length"
       :to="`/box/${box.id}/edit`"
       class="p-6 text-2xl h-36 border border-dashed rounded-lg hover:shadow-lg flex items-center justify-center gap-2"
@@ -77,7 +77,7 @@ async function handleReset() {
         />
       </svg>
       Add cards to this box
-    </router-link>
+    </NuxtLink>
     <div v-else>
       <div
         class="grid sm:grid-cols-2 gap-5 p-5 md:p-7 mb-10 bg-slate-100 rounded-lg border border-slate-200"

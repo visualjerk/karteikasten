@@ -14,5 +14,5 @@ const classes = useButtonStyleClasses(props)
 </script>
 
 <template>
-  <router-link :to="to" :class="classes"><slot /></router-link>
+  <NuxtLink :to="to" :class="classes"><slot /></NuxtLink>
 </template>

@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <router-link :to="to" custom v-slot="{ href, navigate, isExactActive }">
+  <NuxtLink :to="to" custom v-slot="{ href, navigate, isExactActive }">
     <a
       :href="href"
       @click="navigate"
@@ -16,5 +16,5 @@ defineProps<{
       v-bind="$attrs"
       ><slot
     /></a>
-  </router-link>
+  </NuxtLink>
 </template>
