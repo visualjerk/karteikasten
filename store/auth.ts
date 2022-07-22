@@ -5,7 +5,7 @@ function apiFetch(url: string, fetchOptions: any = {}) {
     baseURL: '/api',
     ...fetchOptions,
     headers: {
-      Authorization: `Bearer ${useAuthCookie().value}`,
+      Authorization: useAuthCookie().value,
       ...fetchOptions.headers,
     },
   })

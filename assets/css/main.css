@@ -17,3 +17,7 @@
 
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply overflow-y-scroll;
+}

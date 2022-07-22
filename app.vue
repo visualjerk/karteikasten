@@ -3,8 +3,9 @@ import MenuItem from '@/components/MenuItem.vue'
 import ActionButton from '@/components/ActionButton.vue'
 
 import { getUser, login, logout } from '@/store/auth'
+import { User } from '@/types/user'
 
-const user = useState('user')
+const user = useState<User | undefined>('user')
 
 getUser()
 
@@ -39,7 +40,10 @@ useHead({
           Login
         </ActionButton>
         <ActionButton @click="logout" size="small" v-else>
-          {{ user.email }}
+          <img
+            :src="user.avatarUrl"
+            class="w-5 rounded-full border border-slate-300 mr-2"
+          />
           Logout
         </ActionButton>
         <a

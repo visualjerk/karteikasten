@@ -10,7 +10,8 @@
     "@prisma/client": "^4.1.0",
     "@vueuse/core": "^8.9.3",
     "lodash-es": "^4.17.21",
-    "luxon": "^3.0.1"
+    "luxon": "^3.0.1",
+    "octokit": "^2.0.4"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.6",
