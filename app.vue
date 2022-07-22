@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import MenuItem from '@/components/MenuItem.vue'
+import ActionButton from '@/components/ActionButton.vue'
+
+import { login, logout, getUser } from '@/hooks/use-auth'
+
+const user = useState('user')
+
+await getUser()
 
 useHead({
   title: 'Karteikasten | Atomic Learning',
@@ -28,6 +35,10 @@ useHead({
       </NuxtLink>
       <nav class="flex items-center gap-2">
         <MenuItem to="/" class="hidden sm:block">Your Boxes</MenuItem>
+        <ActionButton @click="login" size="small" v-if="!user">
+          Login
+        </ActionButton>
+        <ActionButton @click="logout" size="small" v-else>Logout</ActionButton>
         <a
           href="https://github.com/visualjerk/karteikasten"
           class="flex px-2 py-1 text-slate-600 hover:text-slate-800"
