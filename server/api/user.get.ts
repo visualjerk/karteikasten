@@ -14,7 +14,8 @@ async function callPrisma<T>(callback: (prisma: PrismaClient) => Promise<T>) {
 }
 
 export default defineEventHandler(async function (event): Promise<User> {
-  const octokit = new Octokit({ auth: event.req.headers.authorization })
+  const cookies = useCookies(event)
+  const octokit = new Octokit({ auth: cookies.gh_token })
   const { data: githubUser } = await octokit.rest.users.getAuthenticated()
 
   let user = await callPrisma((prisma) =>

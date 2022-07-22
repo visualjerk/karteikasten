@@ -6,6 +6,7 @@ import { getUser, login, logout } from '@/store/auth'
 import { User } from '@/types/user'
 
 const user = useState<User | undefined>('user')
+const initializing = useState<boolean>('initializing')
 
 getUser()
 
@@ -36,7 +37,12 @@ useHead({
       </NuxtLink>
       <nav class="flex items-center gap-2">
         <MenuItem to="/" class="hidden sm:block">Your Boxes</MenuItem>
-        <ActionButton @click="login" size="small" v-if="!user">
+        <ActionButton
+          @click="login"
+          size="small"
+          v-if="!user"
+          :disabled="initializing"
+        >
           Login
         </ActionButton>
         <ActionButton @click="logout" size="small" v-else>

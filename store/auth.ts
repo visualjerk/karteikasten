@@ -1,26 +1,13 @@
 const useAuthCookie = () => useCookie('gh_token')
 
-function apiFetch(url: string, fetchOptions: any = {}) {
-  return $fetch(url, {
-    baseURL: '/api',
-    ...fetchOptions,
-    headers: {
-      Authorization: useAuthCookie().value,
-      ...fetchOptions.headers,
-    },
-  })
-}
-
 export async function getUser() {
+  useState('initializing').value = true
   if (!process.client) {
     return
   }
-  try {
-    const user = await apiFetch('/user')
-    useState('user').value = user
-  } catch (e) {
-    console.error(e)
-  }
+  const user = await $fetch('/api/user')
+  useState('user').value = user
+  useState('initializing').value = false
 }
 
 export const login = () => {
