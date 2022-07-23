@@ -1,4 +1,4 @@
-import { router as trpcRouter } from '@trpc/server'
+import { router as trpcRouter, TRPCError } from '@trpc/server'
 import { callPrisma } from '@/server/prisma'
 import type { Context } from '../context'
 import { getUser } from './users'
@@ -18,6 +18,29 @@ export const boxes = trpcRouter<Context>()
       )
 
       return boxes
+    },
+  })
+  .query('get', {
+    input: z.object({
+      id: z.number(),
+    }),
+    async resolve({ ctx, input }) {
+      const user = await getUser(ctx)
+
+      const box = await callPrisma((prisma) =>
+        prisma.box.findFirst({
+          where: {
+            id: input.id,
+            userId: user.id,
+          },
+          include: {
+            cards: true,
+          },
+        })
+      )
+      if (!box) throw new TRPCError({ code: 'NOT_FOUND' })
+
+      return box
     },
   })
   .mutation('create', {
@@ -49,5 +72,41 @@ export const boxes = trpcRouter<Context>()
       )
 
       return box
+    },
+  })
+  .mutation('delete', {
+    input: z.object({
+      id: z.number(),
+    }),
+    async resolve({ ctx, input }) {
+      const user = await getUser(ctx)
+
+      const box = await callPrisma((prisma) =>
+        prisma.box.findFirst({
+          where: {
+            id: input.id,
+            userId: user.id,
+          },
+        })
+      )
+      if (!box) throw new TRPCError({ code: 'NOT_FOUND' })
+
+      await callPrisma((prisma) =>
+        prisma.card.deleteMany({
+          where: {
+            boxId: input.id,
+          },
+        })
+      )
+
+      await callPrisma((prisma) =>
+        prisma.box.delete({
+          where: {
+            id: input.id,
+          },
+        })
+      )
+
+      return true
     },
   })

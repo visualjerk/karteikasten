@@ -3,19 +3,15 @@ import LinkButton from '@/components/LinkButton.vue'
 import ActionButton from '@/components/ActionButton.vue'
 import OverviewCard from '@/components/OverviewCard.vue'
 
-import { nextTick } from 'vue'
 import { useRouter } from 'vue-router'
-import { Box, useBoxes } from '@/store/boxes'
-import { useSession } from '@/store/sessions'
+import type { InferQueryOutput } from '@/server/trpc/types'
 
 const props = defineProps<{
-  box: Box
+  box: InferQueryOutput<'boxes.get'>
 }>()
-
 const { push } = useRouter()
-const { remove } = useBoxes()
-const { reset, getCardState } = useSession(props.box)
 
+const pending = ref(false)
 async function handleRemove() {
   if (!props.box) {
     return
@@ -24,9 +20,12 @@ async function handleRemove() {
   if (!sure) {
     return
   }
+  pending.value = true
+  await useClient().mutation('boxes.delete', {
+    id: props.box.id,
+  })
   push('/')
-  await nextTick()
-  remove(props.box.id)
+  pending.value = false
 }
 
 async function handleReset() {
@@ -36,7 +35,7 @@ async function handleReset() {
   if (!sure) {
     return
   }
-  reset()
+  //reset()
 }
 </script>
 
@@ -66,7 +65,7 @@ async function handleReset() {
       </div>
     </div>
     <NuxtLink
-      v-if="!box.cards.length"
+      v-if="!box.cards?.length"
       :to="`/box/${box.id}/edit`"
       class="p-6 text-2xl h-36 border border-dashed rounded-lg hover:shadow-lg flex items-center justify-center gap-2"
     >
@@ -103,7 +102,6 @@ async function handleReset() {
         <OverviewCard
           v-for="(card, index) in box.cards"
           :card="card"
-          :cardState="getCardState(card)"
           :key="index"
         />
       </div>

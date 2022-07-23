@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { useBoxes } from '@/store/boxes'
 
 const route = useRoute()
-const { get } = useBoxes()
-const box = computed(() => get(route.params.id as string))
+const { data: box, pending } = await useAsyncQuery([
+  'boxes.get',
+  {
+    id: Number(route.params.id),
+  },
+])
 </script>
 
 <template>
   <article>
-    <h1 v-if="!box">Box not found</h1>
+    <h1 v-if="pending">Loading ...</h1>
+    <h1 v-else-if="!box">Box not found</h1>
     <NuxtPage v-else :box="box" />
   </article>
 </template>
