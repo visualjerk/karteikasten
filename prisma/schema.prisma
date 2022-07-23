@@ -16,4 +16,26 @@ model User {
   id        Int      @id @default(autoincrement())
   githubId  Int      @unique
   createdAt DateTime @default(now())
+  boxes     Box[]
+}
+
+model Box {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  cards     Card[]
+}
+
+model Card {
+  id           Int      @id @default(autoincrement())
+  front        String
+  back         String
+  createdAt    DateTime @default(now())
+  box          Box      @relation(fields: [boxId], references: [id])
+  boxId        Int
+  lastTryAt    DateTime @default(now())
+  successCount Int      @default(0)
+  errorCount   Int      @default(0)
 }

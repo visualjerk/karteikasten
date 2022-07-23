@@ -12,7 +12,8 @@
     "lodash-es": "^4.17.21",
     "luxon": "^3.0.1",
     "octokit": "^2.0.4",
-    "trpc-nuxt": "^0.2.4"
+    "trpc-nuxt": "^0.2.4",
+    "zod": "^3.17.10"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.6",

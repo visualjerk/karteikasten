@@ -1,8 +1,8 @@
-let userQuery: ReturnType<typeof useAsyncQuery<'getUser'>> | undefined
+let userQuery: ReturnType<typeof useAsyncQuery<'users.get'>> | undefined
 
 export function useUser() {
   if (!userQuery) {
-    userQuery = useAsyncQuery(['getUser'])
+    userQuery = useAsyncQuery(['users.get'])
   }
   return userQuery
 }
