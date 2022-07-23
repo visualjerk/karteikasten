@@ -11,8 +11,7 @@ export function login() {
   if (!process.client) {
     return
   }
-  const { GITHUB_CLIENT_ID } = useRuntimeConfig()
-  window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user:email`
+  window.location.pathname = '/api/auth/login'
 }
 
 export async function logout() {

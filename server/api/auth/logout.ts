@@ -1,4 +1,4 @@
-export default defineEventHandler(async function (event) {
+export default defineEventHandler((event) => {
   deleteCookie(event, 'gh_token')
   return true
 })

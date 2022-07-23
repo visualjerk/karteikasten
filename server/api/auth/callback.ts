@@ -1,6 +1,6 @@
 import { useQuery, sendRedirect, setCookie } from 'h3'
 
-export default defineEventHandler(async function (event) {
+export default defineEventHandler(async (event) => {
   const { code } = useQuery(event)
 
   if (!code) {

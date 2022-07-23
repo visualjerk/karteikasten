@@ -8,11 +8,6 @@ export default defineNuxtConfig({
       postcssOptions: require('./postcss.config.cjs'),
     },
   },
-  runtimeConfig: {
-    public: {
-      GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
-    },
-  },
   modules: ['trpc-nuxt'],
   trpc: {
     baseURL: 'http://localhost:3000',
