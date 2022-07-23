@@ -6,7 +6,7 @@ import BoxCardInput from '@/components/BoxCardInput.vue'
 
 import { nextTick, ref, onMounted, ComponentPublicInstance } from 'vue'
 import { useRouter } from 'vue-router'
-import { useBoxes, NewCard } from '@/store/boxes'
+import { NewCard } from '@/store/boxes'
 
 const boxName = ref('My New Box')
 const inputFrontEl = ref<ComponentPublicInstance>()
@@ -28,10 +28,9 @@ async function handleEnter() {
 }
 
 const { push } = useRouter()
-const { add } = useBoxes()
-function save() {
+async function save() {
   addCard()
-  add({
+  await useClient().mutation('boxes.create', {
     name: boxName.value,
     cards: cardList.value,
   })

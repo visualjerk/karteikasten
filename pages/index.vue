@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { useBoxes } from '@/store/boxes'
-
-const { all: boxes } = useBoxes()
+const { data: boxes, pending, refresh } = await useAsyncQuery(['boxes.getAll'])
+refresh()
 </script>
 
 <template>
@@ -13,10 +12,10 @@ const { all: boxes } = useBoxes()
     </p>
 
     <h2 class="mb-4">Your Boxes</h2>
-    <div class="grid sm:grid-cols-2 gap-4">
+    <div class="grid sm:grid-cols-2 gap-4" v-if="!pending">
       <NuxtLink
         to="/new-box"
-        class="p-6 text-2xl border border-dashed rounded-lg hover:shadow-lg flex items-center justify-center gap-2"
+        class="sm:h-36 p-6 text-2xl border border-dashed rounded-lg hover:shadow-lg flex items-center justify-center gap-2"
       >
         <svg style="width: 30px; height: 30px" viewBox="0 0 24 24">
           <path
