@@ -13,4 +13,12 @@ export default defineNuxtConfig({
       GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
     },
   },
+  modules: ['trpc-nuxt'],
+  trpc: {
+    baseURL: 'http://localhost:3000',
+    endpoint: '/trpc',
+  },
+  typescript: {
+    strict: true, // required to make input/output types work
+  },
 })

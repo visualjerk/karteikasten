@@ -230,6 +230,13 @@
     "@babel/helper-plugin-utils" "^7.18.6"
     "@babel/plugin-syntax-typescript" "^7.18.6"
 
+"@babel/runtime@^7.9.0":
+  version "7.18.9"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.9.tgz#b4fcfce55db3d2e5e080d2490f608a3b9f407f4a"
+  integrity sha512-lkqXDcvlFT5rvEjiu6+QYO+1GXrEHRo2LOtS7E4GtX5ESIZOgepqsZBVIj6Pv+a6zqsya9VCgiK1KAK4BvJDAw==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/standalone@^7.17.7":
   version "7.18.9"
   resolved "https://registry.yarnpkg.com/@babel/standalone/-/standalone-7.18.9.tgz#27d9bccac590df9e2d34b632e5d600f68b3fe581"
@@ -400,7 +407,31 @@
     unimport "^0.1.6"
     untyped "^0.4.4"
 
-"@nuxt/kit@^3.0.0-rc.6":
+"@nuxt/kit@3.0.0-rc.5":
+  version "3.0.0-rc.5"
+  resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.0.0-rc.5.tgz#4ee104e517910ed26132583d7adaff88bdd8d89a"
+  integrity sha512-PmRfy0AdpvYne5p1/QWXOFoJawnjC/p2TkEJeCgI7MMHP7U2ru/7MxM7x0+ScjD13fUd4KSv1bCMJRTCoaCzPQ==
+  dependencies:
+    "@nuxt/schema" "^3.0.0-rc.5"
+    c12 "^0.2.8"
+    consola "^2.15.3"
+    defu "^6.0.0"
+    globby "^13.1.2"
+    hash-sum "^2.0.0"
+    ignore "^5.2.0"
+    jiti "^1.14.0"
+    knitwork "^0.1.2"
+    lodash.template "^4.5.0"
+    mlly "^0.5.4"
+    pathe "^0.3.2"
+    pkg-types "^0.3.3"
+    scule "^0.2.1"
+    semver "^7.3.7"
+    unctx "^1.1.4"
+    unimport "^0.4.4"
+    untyped "^0.4.4"
+
+"@nuxt/kit@^3.0.0-rc.4", "@nuxt/kit@^3.0.0-rc.6":
   version "3.0.0-rc.6"
   resolved "https://registry.yarnpkg.com/@nuxt/kit/-/kit-3.0.0-rc.6.tgz#b59c10639cb591bdc5a63164fb352b344230a065"
   integrity sha512-+lxSd6dSWlAzMXfGOPcY4856xnMF1Ck1rycFUZ+K2QYiDXphq/fiW2eMaWLVvqgPyL2Box2WzVDZJ6C5ceptcw==
@@ -424,7 +455,7 @@
     unimport "^0.4.5"
     untyped "^0.4.4"
 
-"@nuxt/schema@^3.0.0-rc.1", "@nuxt/schema@^3.0.0-rc.6":
+"@nuxt/schema@^3.0.0-rc.1", "@nuxt/schema@^3.0.0-rc.5", "@nuxt/schema@^3.0.0-rc.6":
   version "3.0.0-rc.6"
   resolved "https://registry.yarnpkg.com/@nuxt/schema/-/schema-3.0.0-rc.6.tgz#47baab10792057c799cd60ab2570d4fa20d65e1d"
   integrity sha512-BcD5YtWRhn+jU2DlzuI1TeITFeOt5x6qm2KeaU/d5jzJ0oZDzmZwKsAimLtRbHwyU6/kKa+zFbK6pp5obm1XLg==
@@ -860,6 +891,18 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
+"@trpc/client@^9.26.0":
+  version "9.26.2"
+  resolved "https://registry.yarnpkg.com/@trpc/client/-/client-9.26.2.tgz#82f57bfe96388a8028b10ebb9aad4eb58ec90b71"
+  integrity sha512-R7eaxEtcK1C6PwxlGZCmMEiGGfn1BUU/hnulTpHVw/Mkd/3EqQqvP3Gs7pAYnJAZ44rjNF3Hepw5q2nP2Ctnhg==
+  dependencies:
+    "@babel/runtime" "^7.9.0"
+
+"@trpc/server@^9.26.0":
+  version "9.26.2"
+  resolved "https://registry.yarnpkg.com/@trpc/server/-/server-9.26.2.tgz#2386d0d0c76b9d6cbdcef3006ea3221729617c21"
+  integrity sha512-J1kP072cVYC5H2qFhiLQ/gV57s0of++9QLLKf9n8mVfx300tecKQW2eu/oFvRCDPRTTQ1prHz9zm15IzLwoRrw==
+
 "@trysound/sax@0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@trysound/sax/-/sax-0.2.0.tgz#cccaab758af56761eb7bf37af6f03f326dd798ad"
@@ -1098,7 +1141,7 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.2.37.tgz#8e6adc3f2759af52f0e85863dfb0b711ecc5c702"
   integrity sha512-4rSJemR2NQIo9Klm1vabqWjD8rs/ZaJSzMxkMNeJS6lHiUjjUeYFbooN19NgFjztubEKh3WlZUeOLVdbbUWHsw==
 
-"@vueuse/core@^8.9.3":
+"@vueuse/core@8.9.4", "@vueuse/core@^8.9.3":
   version "8.9.4"
   resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-8.9.4.tgz#c7db40f19390b3c9f4ff9294a30461497f62ec19"
   integrity sha512-B/Mdj9TK1peFyWaPof+Zf/mP9XuGAngaJZBwPaXBvU3aCTZlx3ltlrFFFyMV4iGBwsjSCeUCgZrtkEj9dS2Y3Q==
@@ -1117,6 +1160,17 @@
   version "8.9.4"
   resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-8.9.4.tgz#a4132db33e4c1b1023636acfa20aa7b37ab3d978"
   integrity sha512-IwSfzH80bnJMzqhaapqJl9JRIiyQU0zsRGEgnxN6jhq7992cPUJIRfV+JHRIZXjYqbwt07E1gTEp0R0zPJ1aqw==
+
+"@vueuse/nuxt@^8.9.3":
+  version "8.9.4"
+  resolved "https://registry.yarnpkg.com/@vueuse/nuxt/-/nuxt-8.9.4.tgz#22f14e23017f406d0bd37e9b4441483a1dd4277f"
+  integrity sha512-iA0/maD70161MYY7HjCGmxMd97LqiaDA5d7pZnuBe3Xanm6xetvbvYCLAlhigbTujfDUQcmD0qiHbNaXaIP5Xg==
+  dependencies:
+    "@nuxt/kit" "^3.0.0-rc.4"
+    "@vueuse/core" "8.9.4"
+    "@vueuse/metadata" "8.9.4"
+    local-pkg "^0.4.1"
+    vue-demi "*"
 
 "@vueuse/shared@8.9.4":
   version "8.9.4"
@@ -1861,6 +1915,11 @@ decode-uri-component@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
   integrity sha512-hjf+xovcEn31w/EUYdTXQh/8smFL/dzYjohQGEIgjyNavaJfBY2p5F527Bo1VPATxv0VYTUC2bOcXvqFwk78Og==
+
+dedent@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/dedent/-/dedent-0.7.0.tgz#2495ddbaf6eb874abb0e1be9df22d2e5a544326c"
+  integrity sha512-Q6fKUPqnAHAyhiUgFU7BUzLiv0kd8saH9al7tnu5Q/okj6dnupxyTgFIBjVzJATdfIAm9NAsvXNzjaKa+bxVyA==
 
 deepmerge@^4.2.2:
   version "4.2.2"
@@ -4322,6 +4381,11 @@ redis-parser@^3.0.0:
   dependencies:
     redis-errors "^1.0.0"
 
+regenerator-runtime@^0.13.4:
+  version "0.13.9"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52"
+  integrity sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==
+
 regexp.prototype.flags@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/regexp.prototype.flags/-/regexp.prototype.flags-1.4.3.tgz#87cab30f80f66660181a3bb7bf5981a872b367ac"
@@ -4886,6 +4950,22 @@ tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
+
+trpc-nuxt@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/trpc-nuxt/-/trpc-nuxt-0.2.4.tgz#ff3c40b229741c533b0ba6f2689efbb83bb860d1"
+  integrity sha512-rSOKCEVwmFEfl4jINnkOleN/zyxWAGJ5fmZbUJsQ+PD+vwFcWlLSzXzqTL54+A83gDi0IqbBSgR9cvvotUjF0g==
+  dependencies:
+    "@nuxt/kit" "3.0.0-rc.5"
+    "@trpc/client" "^9.26.0"
+    "@trpc/server" "^9.26.0"
+    "@vueuse/core" "^8.9.3"
+    "@vueuse/nuxt" "^8.9.3"
+    dedent "^0.7.0"
+    defu "^6.0.0"
+    h3 "^0.7.10"
+    pathe "^0.3.0"
+    ufo "^0.8.5"
 
 tslib@^2.1.0:
   version "2.4.0"

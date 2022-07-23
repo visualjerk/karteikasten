@@ -2,13 +2,9 @@
 import MenuItem from '@/components/MenuItem.vue'
 import ActionButton from '@/components/ActionButton.vue'
 
-import { getUser, login, logout } from '@/store/auth'
-import { User } from '@/types/user'
+import { login, logout, useUser } from '@/store/auth'
 
-const user = useState<User | undefined>('user')
-const initializing = useState<boolean>('initializing')
-
-getUser()
+const { pending, data: user } = await useUser()
 
 useHead({
   title: 'Karteikasten | Atomic Learning',
@@ -41,7 +37,7 @@ useHead({
           @click="login"
           size="small"
           v-if="!user"
-          :disabled="initializing"
+          :disabled="pending"
         >
           Login
         </ActionButton>

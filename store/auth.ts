@@ -1,16 +1,13 @@
-const useAuthCookie = () => useCookie('gh_token')
+let userQuery: ReturnType<typeof useAsyncQuery<'getUser'>> | undefined
 
-export async function getUser() {
-  useState('initializing').value = true
-  if (!process.client) {
-    return
+export function useUser() {
+  if (!userQuery) {
+    userQuery = useAsyncQuery(['getUser'])
   }
-  const user = await $fetch('/api/user')
-  useState('user').value = user
-  useState('initializing').value = false
+  return userQuery
 }
 
-export const login = () => {
+export function login() {
   if (!process.client) {
     return
   }
@@ -18,7 +15,8 @@ export const login = () => {
   window.location.href = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user:email`
 }
 
-export const logout = async () => {
-  useAuthCookie().value = null
-  useState('user').value = null
+export async function logout() {
+  await $fetch('/api/auth/logout')
+  const { refresh } = await useUser()
+  await refresh()
 }

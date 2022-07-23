@@ -1,10 +1,10 @@
 import { useQuery, sendRedirect, setCookie } from 'h3'
 
-export default async (req, res) => {
-  const { code } = useQuery(req)
+export default defineEventHandler(async function (event) {
+  const { code } = useQuery(event)
 
   if (!code) {
-    return sendRedirect(res, '/')
+    return sendRedirect(event, '/')
   }
   const response: any = await $fetch(
     'https://github.com/login/oauth/access_token',
@@ -18,10 +18,10 @@ export default async (req, res) => {
     }
   )
   if (response.error) {
-    return sendRedirect(res, '/')
+    return sendRedirect(event, '/')
   }
 
-  setCookie(res, 'gh_token', response.access_token, { path: '/' })
+  setCookie(event, 'gh_token', response.access_token, { path: '/' })
 
-  return sendRedirect(res, '/')
-}
+  return sendRedirect(event, '/')
+})
