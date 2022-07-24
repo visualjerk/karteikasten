@@ -7,8 +7,11 @@ import { z } from 'zod'
 export const boxes = trpcRouter<Context>()
   .query('getAll', {
     async resolve({ ctx }) {
+      console.time('getUser')
       const user = await getUser(ctx)
+      console.timeEnd('getUser')
 
+      console.time('getAll')
       const boxes = await callPrisma((prisma) =>
         prisma.box.findMany({
           where: {
@@ -16,6 +19,7 @@ export const boxes = trpcRouter<Context>()
           },
         })
       )
+      console.timeEnd('getAll')
 
       return boxes
     },

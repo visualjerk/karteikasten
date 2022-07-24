@@ -1,6 +1,8 @@
 <script setup lang="ts">
-const { data: boxes, pending, refresh } = await useAsyncQuery(['boxes.getAll'])
-refresh()
+const { data: boxes } = await useAsyncQuery(['boxes.getAll'], {
+  server: false,
+  initialCache: false,
+})
 </script>
 
 <template>
@@ -12,7 +14,7 @@ refresh()
     </p>
 
     <h2 class="mb-4">Your Boxes</h2>
-    <div class="grid sm:grid-cols-2 gap-4" v-if="!pending">
+    <div class="grid sm:grid-cols-2 gap-4">
       <NuxtLink
         to="/new-box"
         class="sm:h-36 p-6 text-2xl border border-dashed rounded-lg hover:shadow-lg flex items-center justify-center gap-2"

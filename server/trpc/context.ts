@@ -7,6 +7,8 @@ export interface AuthUser {
   avatar_url: string
 }
 
+let octokit: Octokit | undefined
+
 // The app's context - is generated for each incoming request
 export async function createContext(event: CompatibilityEvent) {
   // Create your context based on the request object
@@ -16,8 +18,12 @@ export async function createContext(event: CompatibilityEvent) {
     if (!ghToken) {
       return null
     }
-    const octokit = new Octokit({ auth: ghToken })
+    console.time('getUserFromHeader')
+    if (!octokit) {
+      octokit = new Octokit({ auth: ghToken })
+    }
     const { data: githubUser } = await octokit.rest.users.getAuthenticated()
+    console.timeEnd('getUserFromHeader')
     return githubUser
   }
   const authUser = await getUserFromHeader()

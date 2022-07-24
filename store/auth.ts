@@ -2,7 +2,9 @@ let userQuery: ReturnType<typeof useAsyncQuery<'users.get'>> | undefined
 
 export function useUser() {
   if (!userQuery) {
-    userQuery = useAsyncQuery(['users.get'])
+    userQuery = useAsyncQuery(['users.get'], {
+      server: false
+    })
   }
   return userQuery
 }
