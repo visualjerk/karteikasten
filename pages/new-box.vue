@@ -5,6 +5,7 @@ import type { EditBox } from '@/server/trpc/types'
 
 const { push } = useRouter()
 
+const newBox: EditBox = { name: 'My New Box ', cards: [] }
 async function handleSave(box: EditBox) {
   await useClient().mutation('boxes.create', box)
   push('/')
@@ -16,7 +17,7 @@ function handleCancel() {
 </script>
 
 <template>
-  <BoxEditForm @save="handleSave" @cancel="handleCancel">
+  <BoxEditForm :box="newBox" @save="handleSave" @cancel="handleCancel">
     <template #save-button>Save New Box</template>
     <template #cancel-button>Discard Box</template>
   </BoxEditForm>

@@ -5,10 +5,10 @@ import BoxCardInput from '@/components/BoxCardInput.vue'
 
 import { nextTick, ref, onMounted, ComponentPublicInstance } from 'vue'
 import { cloneDeep } from 'lodash-es'
-import type { Box, EditBox, NewCard } from '@/server/trpc/types'
+import type { EditBox, NewCard } from '@/server/trpc/types'
 
 const props = defineProps<{
-  box?: Box
+  box: EditBox
 }>()
 
 const emit = defineEmits<{
@@ -16,26 +16,26 @@ const emit = defineEmits<{
   (e: 'cancel'): void
 }>()
 
-const newBox = {
-  name: 'My New Box',
-  cards: [],
-}
-const boxCopy = ref<EditBox>(props.box ? cloneDeep(props.box) : newBox)
+const boxCopy = ref<EditBox>(cloneDeep(props.box))
 const inputFrontEl = ref<ComponentPublicInstance>()
 const newCard = ref<NewCard>({ front: '', back: '' })
 
-function addCard() {
-  const { front, back } = newCard.value
+function saniziteCard(card: NewCard) {
+  const { front, back } = card
   const sanitizedFront = front.trim()
   const sanitizedBack = back.trim()
   if (sanitizedFront === '' || sanitizedBack === '') {
-    return
+    return null
   }
-  boxCopy.value.cards.push(newCard.value)
+  return {
+    ...card,
+    front: sanitizedFront,
+    back: sanitizedBack,
+  }
 }
 
 async function handleEnter() {
-  addCard()
+  boxCopy.value.cards.push(newCard.value)
   newCard.value = { front: '', back: '' }
   await nextTick()
   inputFrontEl.value?.$el.focus()
@@ -44,8 +44,14 @@ async function handleEnter() {
 const pending = ref(false)
 async function save() {
   pending.value = true
-  addCard()
-  emit('save', boxCopy.value)
+  const newCards = [...boxCopy.value.cards, newCard.value]
+  const cards = newCards
+    .map(saniziteCard)
+    .filter((card) => card != null) as NewCard[]
+  emit('save', {
+    ...boxCopy.value,
+    cards,
+  })
 }
 
 onMounted(() => {
@@ -65,7 +71,7 @@ onMounted(() => {
         <BoxCardInput v-model="card.front" placeholder="Frontside ..." />
         <BoxCardInput v-model="card.back" placeholder="Backside ..." />
       </BoxCard>
-      <BoxCard v-if="!pending">
+      <BoxCard>
         <BoxCardInput
           ref="inputFrontEl"
           v-model="newCard.front"
