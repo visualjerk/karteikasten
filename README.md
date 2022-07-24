@@ -9,9 +9,9 @@ This app helps you learn "atomic" things like vocabulary, formula and everything
 - [x] Add learn with TRPC
 - [x] Add global learning reset
 - [x] Improve auth check performance
+- [ ] Add unauthorized usage option
 - [ ] Add smarter card relevance for new cards
 - [ ] Add single card reset
-- [ ] Add unauthorized usage option
 - [ ] Add loading skeleton
 - [ ] Add button pending indicator
 - [ ] Add global pending indicator
