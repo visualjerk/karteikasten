@@ -17,6 +17,37 @@ export interface GithubUser {
 
 let prisma: PrismaClient | undefined
 
+const DEFAULT_BOX = {
+  name: 'German',
+}
+
+const DEFAULT_CARDS = [
+  {
+    front: 'Hallo',
+    back: 'Hello',
+  },
+  {
+    front: 'Liebe',
+    back: 'Love',
+  },
+  {
+    front: 'Haus',
+    back: 'House',
+  },
+  {
+    front: 'Du',
+    back: 'You',
+  },
+  {
+    front: 'Wir',
+    back: 'We',
+  },
+  {
+    front: 'Gut',
+    back: 'Good',
+  },
+]
+
 async function getAnonymousUser(
   event: CompatibilityEvent,
   prisma: PrismaClient
@@ -43,9 +74,20 @@ async function getAnonymousUser(
     }
   }
 
-  // Anonymously login and create token
+  // Anonymously login with new user and create token
   const user = await prisma.user.create({
-    data: {},
+    data: {
+      boxes: {
+        create: [
+          {
+            ...DEFAULT_BOX,
+            cards: {
+              create: DEFAULT_CARDS,
+            },
+          },
+        ],
+      },
+    },
   })
   const authUser: AnonymousUser = { id: user.id }
   const newToken = jwt.sign(authUser, process.env.JWT_SECRET as string)

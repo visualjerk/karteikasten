@@ -11,6 +11,7 @@ This app helps you learn "atomic" things like vocabulary, formula and everything
 - [x] Improve auth check performance
 - [x] Add unauthorized usage option
 - [x] Sync new Github User with Anonymous User
+- [x] Add first box to fresh user
 - [ ] Add smarter card relevance for new cards
 - [ ] Add single card reset
 - [ ] Add loading skeleton
