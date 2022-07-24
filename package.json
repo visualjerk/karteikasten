@@ -9,6 +9,7 @@
   "dependencies": {
     "@prisma/client": "^4.1.0",
     "@vueuse/core": "^8.9.3",
+    "jsonwebtoken": "^8.5.1",
     "lodash-es": "^4.17.21",
     "luxon": "^3.0.1",
     "node-cache": "^5.1.2",

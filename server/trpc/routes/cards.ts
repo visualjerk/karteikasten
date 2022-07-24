@@ -1,10 +1,9 @@
 import { router as trpcRouter, TRPCError } from '@trpc/server'
 import type { Context } from '../context'
-import { getUser } from './users'
 import { z } from 'zod'
 
 async function checkPermission(ctx: Context, id: number) {
-  const user = await getUser(ctx)
+  const user = ctx.authUser
   const card = await ctx.prisma.card.findFirst({
     where: {
       id,

@@ -9,7 +9,8 @@ This app helps you learn "atomic" things like vocabulary, formula and everything
 - [x] Add learn with TRPC
 - [x] Add global learning reset
 - [x] Improve auth check performance
-- [ ] Add unauthorized usage option
+- [x] Add unauthorized usage option
+- [ ] Sync new Github User with Anonymous User
 - [ ] Add smarter card relevance for new cards
 - [ ] Add single card reset
 - [ ] Add loading skeleton

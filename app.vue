@@ -3,8 +3,19 @@ import MenuItem from '@/components/MenuItem.vue'
 import ActionButton from '@/components/ActionButton.vue'
 
 import { login, logout, useUser } from '@/store/auth'
+import type { GithubUser, AnonymousUser } from '@/server/trpc/context'
 
-const { pending, data: user } = await useUser()
+const { pending, data } = await useUser()
+
+// Hopefully there is a better way to do this
+// Looks like nuxt-trpc infers the type incorrectly
+const user = computed<GithubUser | AnonymousUser | null>(() => {
+  const user = data.value as GithubUser | AnonymousUser | null
+  if (user && 'githubId' in user) {
+    return user as GithubUser
+  }
+  return user
+})
 
 useHead({
   title: 'Karteikasten | Atomic Learning',
@@ -36,10 +47,10 @@ useHead({
         <ActionButton
           @click="login"
           size="small"
-          v-if="!user"
+          v-if="!user || !('githubId' in user)"
           :disabled="pending"
         >
-          Login
+          Login with GitHub
         </ActionButton>
         <ActionButton @click="logout" size="small" v-else>
           <img

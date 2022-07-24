@@ -1,10 +1,9 @@
 import { router as trpcRouter, TRPCError } from '@trpc/server'
 import type { Context } from '../context'
-import { getUser } from './users'
 import { z } from 'zod'
 
 async function getBox(ctx: Context, boxId: number, includeCards = false) {
-  const user = await getUser(ctx)
+  const user = ctx.authUser
   const box = await ctx.prisma.box.findFirst({
     where: {
       id: boxId,
@@ -21,7 +20,7 @@ async function getBox(ctx: Context, boxId: number, includeCards = false) {
 export const boxes = trpcRouter<Context>()
   .query('getAll', {
     async resolve({ ctx }) {
-      const user = await getUser(ctx)
+      const user = ctx.authUser
       const boxes = await ctx.prisma.box.findMany({
         where: {
           userId: user.id,
@@ -50,7 +49,7 @@ export const boxes = trpcRouter<Context>()
       ),
     }),
     async resolve({ ctx, input }) {
-      const user = await getUser(ctx)
+      const user = ctx.authUser
 
       const box = await ctx.prisma.box.create({
         data: {

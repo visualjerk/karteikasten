@@ -14,7 +14,7 @@ datasource db {
 
 model User {
   id        Int      @id @default(autoincrement())
-  githubId  Int      @unique
+  githubId  Int?     @unique
   createdAt DateTime @default(now())
   boxes     Box[]
 }
