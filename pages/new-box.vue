@@ -39,7 +39,6 @@ async function save() {
     cards: cardList.value,
   })
   push('/')
-  pending.value = false
 }
 
 onMounted(() => {

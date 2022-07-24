@@ -9,7 +9,6 @@ export interface AuthUser {
 }
 
 let prisma: PrismaClient | undefined
-let octokit: Octokit | undefined
 
 // The app's context - is generated for each incoming request
 export async function createContext(event: CompatibilityEvent) {
@@ -20,9 +19,7 @@ export async function createContext(event: CompatibilityEvent) {
     if (!ghToken) {
       return null
     }
-    if (!octokit) {
-      octokit = new Octokit({ auth: ghToken })
-    }
+    const octokit = new Octokit({ auth: ghToken })
     const { data: githubUser } = await octokit.rest.users.getAuthenticated()
     return githubUser
   }
