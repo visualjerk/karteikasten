@@ -2,12 +2,18 @@
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const { data: box, pending } = await useAsyncQuery([
-  'boxes.get',
+const { data: box, pending } = await useAsyncQuery(
+  [
+    'boxes.get',
+    {
+      id: Number(route.params.id),
+    },
+  ],
   {
-    id: Number(route.params.id),
-  },
-])
+    server: false,
+    initialCache: false,
+  }
+)
 </script>
 
 <template>

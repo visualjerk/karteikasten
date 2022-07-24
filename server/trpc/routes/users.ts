@@ -1,5 +1,4 @@
 import { router as trpcRouter } from '@trpc/server'
-import { callPrisma } from '@/server/prisma'
 import type { Context, AuthUser } from '../context'
 
 export async function getUser(ctx: Context) {
@@ -7,22 +6,18 @@ export async function getUser(ctx: Context) {
   // we can assume that the user is not null
   const authUser = ctx.authUser as AuthUser
 
-  let user = await callPrisma((prisma) =>
-    prisma.user.findFirst({
-      where: {
+  let user = await ctx.prisma.user.findFirst({
+    where: {
+      githubId: authUser.id,
+    },
+  })
+
+  if (!user) {
+    user = await ctx.prisma.user.create({
+      data: {
         githubId: authUser.id,
       },
     })
-  )
-
-  if (!user) {
-    user = await callPrisma(async (prisma) =>
-      prisma.user.create({
-        data: {
-          githubId: authUser.id,
-        },
-      })
-    )
   }
 
   return {
