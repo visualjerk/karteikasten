@@ -6,13 +6,17 @@ This app helps you learn "atomic" things like vocabulary, formula and everything
 
 ## TODO
 
-- [ ] Add learn with TRPC
+- [x] Add learn with TRPC
+- [x] Add global learning reset
+- [ ] Add better learning session handling
+- [ ] Add single card reset
 - [ ] Add unauthorized usage option
 - [ ] Add loading skeleton
 - [ ] Add button pending indicator
 - [ ] Add global pending indicator
 - [ ] Improve card style
 - [ ] Add different learning variants (timer, speech to text, ...)
+- [ ] Add learn duration diff setting
 - [ ] Add TRPC subscriptions for cross tab updates
 
 ## Unauthorized usage

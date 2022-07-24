@@ -4,7 +4,7 @@ import ActionButton from '@/components/ActionButton.vue'
 import OverviewCard from '@/components/OverviewCard.vue'
 
 import { useRouter } from 'vue-router'
-import { deleteBox } from '@/store/boxes'
+import { deleteBox, resetBox } from '@/store/boxes'
 import type { Box } from '@/server/trpc/types'
 
 const props = defineProps<{
@@ -34,7 +34,7 @@ async function handleReset() {
   if (!sure) {
     return
   }
-  //reset()
+  await resetBox(props.box)
 }
 </script>
 

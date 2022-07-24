@@ -3,6 +3,21 @@ import type { Context } from '../context'
 import { getUser } from './users'
 import { z } from 'zod'
 
+async function getBox(ctx: Context, boxId: number, includeCards = false) {
+  const user = await getUser(ctx)
+  const box = await ctx.prisma.box.findFirst({
+    where: {
+      id: boxId,
+      userId: user.id,
+    },
+    include: {
+      cards: includeCards,
+    },
+  })
+  if (!box) throw new TRPCError({ code: 'NOT_FOUND' })
+  return box
+}
+
 export const boxes = trpcRouter<Context>()
   .query('getAll', {
     async resolve({ ctx }) {
@@ -20,19 +35,7 @@ export const boxes = trpcRouter<Context>()
       id: z.number(),
     }),
     async resolve({ ctx, input }) {
-      const user = await getUser(ctx)
-
-      const box = await ctx.prisma.box.findFirst({
-        where: {
-          id: input.id,
-          userId: user.id,
-        },
-        include: {
-          cards: true,
-        },
-      })
-      if (!box) throw new TRPCError({ code: 'NOT_FOUND' })
-
+      const box = await getBox(ctx, input.id, true)
       return box
     },
   })
@@ -75,18 +78,7 @@ export const boxes = trpcRouter<Context>()
       ),
     }),
     async resolve({ ctx, input }) {
-      const user = await getUser(ctx)
-
-      const oldBox = await ctx.prisma.box.findFirst({
-        where: {
-          id: input.id,
-          userId: user.id,
-        },
-        include: {
-          cards: true,
-        },
-      })
-      if (!oldBox) throw new TRPCError({ code: 'NOT_FOUND' })
+      const oldBox = await getBox(ctx, input.id, true)
 
       const existingCards = input.cards.filter(({ id }) => id != null)
       const newCards = input.cards.filter(({ id }) => id == null)
@@ -131,20 +123,32 @@ export const boxes = trpcRouter<Context>()
       return box
     },
   })
+  .mutation('reset', {
+    input: z.object({
+      id: z.number(),
+    }),
+    async resolve({ ctx, input }) {
+      await getBox(ctx, input.id)
+
+      await ctx.prisma.card.updateMany({
+        where: {
+          boxId: input.id,
+        },
+        data: {
+          errorCount: 0,
+          successCount: 0,
+        },
+      })
+
+      return true
+    },
+  })
   .mutation('delete', {
     input: z.object({
       id: z.number(),
     }),
     async resolve({ ctx, input }) {
-      const user = await getUser(ctx)
-
-      const box = await ctx.prisma.box.findFirst({
-        where: {
-          id: input.id,
-          userId: user.id,
-        },
-      })
-      if (!box) throw new TRPCError({ code: 'NOT_FOUND' })
+      await getBox(ctx, input.id)
 
       await ctx.prisma.card.deleteMany({
         where: {

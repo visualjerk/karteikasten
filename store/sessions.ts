@@ -1,7 +1,7 @@
 import { readonly, ref, ComputedRef } from 'vue'
 import { DateTime, Duration, DurationLikeObject } from 'luxon'
-import type { Box, Card } from '@/server/trpc/types'
 import { addError as addCardError, addSuccess as addCardSuccess } from './cards'
+import type { Box, Card } from '@/server/trpc/types'
 
 const LEARN_DURATION_DIFF = 30
 

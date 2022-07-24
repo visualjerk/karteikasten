@@ -33,3 +33,8 @@ export async function updateBox(box: UpdateBox) {
     getQueryKey(['boxes.get', { id: box.id }]),
   ])
 }
+
+export async function resetBox(box: UpdateBox) {
+  await useClient().mutation('boxes.reset', box)
+  await refreshNuxtData(getQueryKey(['boxes.get', { id: box.id }]))
+}
