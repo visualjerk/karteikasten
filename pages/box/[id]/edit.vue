@@ -1,80 +1,30 @@
 <script setup lang="ts">
-import LinkButton from '@/components/LinkButton.vue'
-import ActionButton from '@/components/ActionButton.vue'
-import BoxCard from '@/components/BoxCard.vue'
-import BoxCardInput from '@/components/BoxCardInput.vue'
-
-import { nextTick, ref, onMounted, ComponentPublicInstance } from 'vue'
+import BoxEditForm from '@/components/BoxEditForm.vue'
 import { useRouter } from 'vue-router'
-
-import { useBoxes, NewCard, Box } from '@/store/boxes'
+import type { Box, EditBox } from '@/server/trpc/types'
 
 const props = defineProps<{
   box: Box
 }>()
 
 const { push } = useRouter()
-const { getCopy, addCardToBox } = useBoxes()
-// We can savely assume that box exists, as we got it as a router-view prop
-const boxCopy = ref(getCopy(props.box.id) as Box)
 
-const inputFrontEl = ref<ComponentPublicInstance>()
-const newCard = ref<NewCard>({ front: '', back: '' })
-
-function addCard() {
-  if (!boxCopy.value) {
-    return
-  }
-  addCardToBox(boxCopy.value, newCard.value)
+async function handleSave(box: EditBox) {
+  await useClient().mutation('boxes.update', {
+    ...box,
+    id: props.box.id,
+  })
+  push(`/box/${props.box.id}`)
 }
 
-async function handleEnter() {
-  addCard()
-  newCard.value = { front: '', back: '' }
-  await nextTick()
-  inputFrontEl.value?.$el.focus()
+async function handleCancel() {
+  push(`/box/${props.box.id}`)
 }
-
-const { set } = useBoxes()
-function save() {
-  if (!boxCopy.value) {
-    return
-  }
-  addCard()
-  set(boxCopy.value)
-  push(`/box/${boxCopy.value.id}`)
-}
-
-onMounted(() => {
-  inputFrontEl.value?.$el.focus()
-})
 </script>
 
 <template>
-  <div>
-    <input v-model="boxCopy.name" class="h1 w-full bg-transparent mb-8" />
-    <div class="grid gap-2 mb-6">
-      <BoxCard v-for="(card, index) in boxCopy.cards" :key="index">
-        <BoxCardInput v-model="card.front" placeholder="Frontside ..." />
-        <BoxCardInput v-model="card.back" placeholder="Backside ..." />
-      </BoxCard>
-      <BoxCard>
-        <BoxCardInput
-          ref="inputFrontEl"
-          v-model="newCard.front"
-          placeholder="Frontside ..."
-          autofocus
-        />
-        <BoxCardInput
-          v-model="newCard.back"
-          @keydown.enter="handleEnter"
-          placeholder="Backside ..."
-        />
-      </BoxCard>
-    </div>
-    <div class="flex gap-3 justify-between">
-      <ActionButton @click="save" primary>Save Changes</ActionButton>
-      <LinkButton :to="`/box/${boxCopy.id}`">Discard Changes</LinkButton>
-    </div>
-  </div>
+  <BoxEditForm :box="box" @save="handleSave" @cancel="handleCancel">
+    <template #save-button>Save Changes</template>
+    <template #cancel-button>Discard Changes</template>
+  </BoxEditForm>
 </template>

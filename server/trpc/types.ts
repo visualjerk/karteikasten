@@ -72,3 +72,14 @@ export type InferAsyncSubscriptionOutput<TRouteKey extends TSubscription> =
  */
 export type InferSubscriptionInput<TRouteKey extends TSubscription> =
   inferProcedureInput<AppRouter['_def']['subscriptions'][TRouteKey]>
+
+export type Box = InferQueryOutput<'boxes.get'>
+export type Card = Box['cards'][0]
+
+export type NewBox = InferMutationInput<'boxes.create'>
+export type NewCard = NewBox['cards'][0]
+
+export type ExistingEditBox = Box & {
+  cards: (Card | NewCard)[]
+}
+export type EditBox = ExistingEditBox | NewBox

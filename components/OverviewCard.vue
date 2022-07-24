@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { InferQueryOutput } from '@/server/trpc/types'
+import type { Card } from '@/server/trpc/types'
 
 const props = defineProps<{
-  card: InferQueryOutput<'boxes.get'>['cards'][0]
+  card: Card
 }>()
 const accuracy = computed(() => {
   const { errorCount, successCount } = props.card

@@ -4,10 +4,10 @@ import ActionButton from '@/components/ActionButton.vue'
 import OverviewCard from '@/components/OverviewCard.vue'
 
 import { useRouter } from 'vue-router'
-import type { InferQueryOutput } from '@/server/trpc/types'
+import type { Box } from '@/server/trpc/types'
 
 const props = defineProps<{
-  box: InferQueryOutput<'boxes.get'>
+  box: Box
 }>()
 const { push } = useRouter()
 
