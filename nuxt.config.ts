@@ -10,9 +10,7 @@ export default defineNuxtConfig({
   },
   modules: ['trpc-nuxt'],
   trpc: {
-    baseURL: process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : 'http://localhost:3000',
+    baseURL: process.env.APP_URL || 'http://localhost:3000',
     endpoint: '/trpc',
   },
   typescript: {
