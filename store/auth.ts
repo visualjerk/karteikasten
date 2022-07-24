@@ -1,12 +1,8 @@
-let userQuery: ReturnType<typeof useAsyncQuery<'users.get'>> | undefined
-
 export function useUser() {
-  if (!userQuery) {
-    userQuery = useAsyncQuery(['users.get'], {
-      server: false
-    })
-  }
-  return userQuery
+  return useAsyncQuery(['users.get'], {
+    server: false,
+    lazy: true,
+  })
 }
 
 export function login() {
@@ -18,6 +14,5 @@ export function login() {
 
 export async function logout() {
   await $fetch('/api/auth/logout')
-  const { refresh } = await useUser()
-  await refresh()
+  await refreshNuxtData()
 }

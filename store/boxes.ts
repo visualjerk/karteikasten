@@ -1,17 +1,35 @@
-import { Box } from '@/server/trpc/types'
+import type { Box, NewBox, UpdateBox } from '@/server/trpc/types'
 
-type BoxQuery = ReturnType<typeof useAsyncQuery<'boxes.get'>>
-type BoxId = Box['id']
+export function useBox(id: Box['id']) {
+  return useAsyncQuery(['boxes.get', { id }], {
+    server: false,
+    initialCache: false,
+    lazy: true,
+  })
+}
 
-const boxQuerys: Map<BoxId, BoxQuery> = new Map()
+export function useBoxes() {
+  return useAsyncQuery(['boxes.getAll'], {
+    server: false,
+    initialCache: false,
+    lazy: true,
+  })
+}
 
-export function useBox(id: BoxId): BoxQuery {
-  if (!boxQuerys.has(id)) {
-    boxQuerys.set(id, useAsyncQuery(['boxes.get', { id }], {
-      server: false,
-      initialCache: false,
-    })) 
-  }
-  // As we set the query, we can assume it is available
-  return boxQuerys.get(id) as BoxQuery
+export async function createBox(box: NewBox) {
+  await useClient().mutation('boxes.create', box)
+  await refreshNuxtData(getQueryKey(['boxes.getAll']))
+}
+
+export async function deleteBox(box: Box) {
+  await useClient().mutation('boxes.delete', box)
+  await refreshNuxtData(getQueryKey(['boxes.getAll']))
+}
+
+export async function updateBox(box: UpdateBox) {
+  await useClient().mutation('boxes.update', box)
+  await refreshNuxtData([
+    getQueryKey(['boxes.getAll']),
+    getQueryKey(['boxes.get', { id: box.id }]),
+  ])
 }

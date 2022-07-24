@@ -1,22 +1,20 @@
 <script setup lang="ts">
 import BoxEditForm from '@/components/BoxEditForm.vue'
-import { useBox } from '@/store/boxes'
 import { useRouter } from 'vue-router'
+import { updateBox } from '@/store/boxes'
 import type { Box, EditBox } from '@/server/trpc/types'
 
 const props = defineProps<{
   box: Box
 }>()
 
-const { refresh } = await useBox(Number(props.box.id))
 const { push } = useRouter()
 
 async function handleSave(box: EditBox) {
-  await useClient().mutation('boxes.update', {
+  await updateBox({
     ...box,
     id: props.box.id,
   })
-  await refresh()
   push(`/box/${props.box.id}`)
 }
 

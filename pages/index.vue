@@ -1,8 +1,6 @@
 <script setup lang="ts">
-const { data: boxes } = await useAsyncQuery(['boxes.getAll'], {
-  server: false,
-  initialCache: false,
-})
+import { useBoxes } from '@/store/boxes'
+const { data: boxes } = await useBoxes()
 </script>
 
 <template>

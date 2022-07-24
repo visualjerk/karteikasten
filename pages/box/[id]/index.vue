@@ -4,6 +4,7 @@ import ActionButton from '@/components/ActionButton.vue'
 import OverviewCard from '@/components/OverviewCard.vue'
 
 import { useRouter } from 'vue-router'
+import { deleteBox } from '@/store/boxes'
 import type { Box } from '@/server/trpc/types'
 
 const props = defineProps<{
@@ -21,9 +22,7 @@ async function handleRemove() {
     return
   }
   pending.value = true
-  await useClient().mutation('boxes.delete', {
-    id: props.box.id,
-  })
+  await deleteBox(props.box)
   push('/')
   pending.value = false
 }

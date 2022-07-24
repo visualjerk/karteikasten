@@ -79,6 +79,6 @@ export type Card = Box['cards'][0]
 export type NewBox = InferMutationInput<'boxes.create'>
 export type NewCard = NewBox['cards'][0]
 
-export type EditBox = NewBox & {
-  cards: (Card | NewCard)[]
-}
+export type UpdateBox = InferMutationInput<'boxes.update'>
+
+export type EditBox = NewBox | UpdateBox
