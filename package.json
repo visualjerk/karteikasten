@@ -11,6 +11,7 @@
     "@vueuse/core": "^8.9.3",
     "lodash-es": "^4.17.21",
     "luxon": "^3.0.1",
+    "node-cache": "^5.1.2",
     "octokit": "^2.0.4",
     "trpc-nuxt": "^0.2.4",
     "zod": "^3.17.10"

@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { Octokit } from 'octokit'
+import { getCache } from '@/server/cache'
 import type { inferAsyncReturnType } from '@trpc/server'
 import type { CompatibilityEvent } from 'h3'
 
@@ -19,9 +20,20 @@ export async function createContext(event: CompatibilityEvent) {
     if (!ghToken) {
       return null
     }
+
+    // Try to get user from cache
+    const cache = getCache()
+    const cachedUser = cache.get(ghToken)
+    if (cachedUser) {
+      return cachedUser
+    }
+
+    // Get user from GitHub
     const octokit = new Octokit({ auth: ghToken })
     const { data: githubUser } = await octokit.rest.users.getAuthenticated()
-    return githubUser
+    const authUser = { id: githubUser.id, avatar_url: githubUser.avatar_url }
+    cache.set(ghToken, authUser)
+    return authUser
   }
   const authUser = await getUserFromHeader()
 
