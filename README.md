@@ -4,7 +4,7 @@ This app helps you learn "atomic" things like vocabulary, formula and everything
 
 [Open Karteikasten](https://visualjerk.github.io/karteikasten/)
 
-## TODO
+## TODOS
 
 - [x] Add learn with TRPC
 - [x] Add global learning reset
