@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import MenuItem from '@/components/MenuItem.vue'
 import ActionButton from '@/components/ActionButton.vue'
 
 import { login, logout, useUser } from '@/store/auth'
@@ -43,7 +42,6 @@ useHead({
         <span class="hidden sm:inline">Atomic Learning</span>
       </NuxtLink>
       <nav class="flex items-center gap-2">
-        <MenuItem to="/" class="hidden sm:block">Your Boxes</MenuItem>
         <ActionButton
           @click="login"
           size="small"
