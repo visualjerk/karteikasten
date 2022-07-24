@@ -4,7 +4,7 @@ import QuestionCard from '@/components/QuestionCard.vue'
 
 import { nextTick, ref } from 'vue'
 import { wait } from '@/utils/wait'
-import { Box } from '@/store/boxes'
+import { Box } from '@/server/trpc/types'
 import { useSession } from '@/store/sessions'
 
 const props = defineProps<{
@@ -13,19 +13,20 @@ const props = defineProps<{
 
 const showBack = ref(false)
 const boxEl = ref()
-const { currentCard, addError, addSuccess, nextCard } = useSession(props.box)
+const { currentCard, addError, addSuccess, nextCard } = useSession(
+  computed(() => props.box)
+)
 
 async function handleSuccess() {
-  addSuccess()
-  await wait(1000)
+  await Promise.all([addSuccess(), wait(1000)])
   nextCard()
   await nextTick()
   boxEl.value.reset()
 }
 
-function handleError() {
-  addError()
+async function handleError() {
   showBack.value = true
+  await addError()
 }
 
 async function handleSkip() {

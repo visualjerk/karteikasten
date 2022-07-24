@@ -29,13 +29,13 @@ model Box {
 }
 
 model Card {
-  id           Int      @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   front        String
   back         String
-  createdAt    DateTime @default(now())
-  box          Box      @relation(fields: [boxId], references: [id])
+  createdAt    DateTime  @default(now())
+  box          Box       @relation(fields: [boxId], references: [id])
   boxId        Int
-  lastTryAt    DateTime @default(now())
-  successCount Int      @default(0)
-  errorCount   Int      @default(0)
+  lastTryAt    DateTime?
+  successCount Int       @default(0)
+  errorCount   Int       @default(0)
 }

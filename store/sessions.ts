@@ -1,41 +1,24 @@
-import { createGlobalState, useStorage } from '@vueuse/core'
-import { readonly, ref } from 'vue'
+import { readonly, ref, ComputedRef } from 'vue'
 import { DateTime, Duration, DurationLikeObject } from 'luxon'
-import type { Box, Card } from './boxes'
-
-export interface CardState {
-  successCount: number
-  errorCount: number
-  lastResponse?: string
-}
-
-export interface Session {
-  cardStates: Record<string, CardState>
-}
+import type { Box, Card } from '@/server/trpc/types'
+import { addError as addCardError, addSuccess as addCardSuccess } from './cards'
 
 const LEARN_DURATION_DIFF = 30
 
-const useGlobalSessionState = createGlobalState(() =>
-  useStorage<Record<string, Session>>('karteikasten-sessions', {})
-)
-
-function getCurrentDate() {
-  return DateTime.now().toString()
-}
-
-function isOlderThan(date: string, duration: DurationLikeObject) {
+function isOlderThan(date: Date, duration: DurationLikeObject) {
   return (
-    DateTime.now().diff(DateTime.fromISO(date)).minus(duration).toMillis() > 0
+    DateTime.now().diff(DateTime.fromJSDate(date)).minus(duration).toMillis() >
+    0
   )
 }
 
-function hasLessSuccessThan(cardState: CardState, successCount: number) {
-  return cardState.successCount < successCount
+function hasLessSuccessThan(card: Card, successCount: number) {
+  return card.successCount < successCount
 }
 
-function isRelevant(cardState: CardState, addSuccessCount = 0) {
+function isRelevant(card: Card, addSuccessCount = 0) {
   for (let step = 1; step < 5; step++) {
-    if (!cardState.lastResponse) {
+    if (!card.lastTryAt) {
       return true
     }
 
@@ -48,8 +31,8 @@ function isRelevant(cardState: CardState, addSuccessCount = 0) {
           })
 
     if (
-      hasLessSuccessThan(cardState, successCount) &&
-      (!duration || isOlderThan(cardState.lastResponse, duration))
+      hasLessSuccessThan(card, successCount) &&
+      (!duration || isOlderThan(card.lastTryAt, duration))
     ) {
       return true
     }
@@ -57,52 +40,14 @@ function isRelevant(cardState: CardState, addSuccessCount = 0) {
   return false
 }
 
-export function useSession(box: Box) {
-  const sessions = useGlobalSessionState()
-
-  function getSession() {
-    let session = sessions.value[box.id]
-
-    if (!session) {
-      session = {
-        cardStates: {},
-      }
-      sessions.value[box.id] = session
-    }
-
-    return session
-  }
-
-  function reset() {
-    const session = getSession()
-    session.cardStates = {}
-  }
-
-  function getCardState(card?: Card) {
-    const id = card?.id || currentCard.value.id
-    const session = getSession()
-    let cardState = session.cardStates[id]
-
-    if (!cardState) {
-      cardState = {
-        successCount: 0,
-        errorCount: 0,
-      }
-      session.cardStates[id] = cardState
-    }
-
-    return cardState
-  }
-
+export function useSession(box: ComputedRef<Box>) {
   function getCardsToLearn(successDiffAdd = 0): Card[] {
-    if (!box.cards.length) {
+    if (!box.value.cards.length) {
       return []
     }
 
-    const cards = box.cards.filter((card) => {
-      const cardState = getCardState(card)
-
-      return isRelevant(cardState, successDiffAdd)
+    const cards = box.value.cards.filter((card) => {
+      return isRelevant(card, successDiffAdd)
     })
 
     if (cards.length) {
@@ -114,7 +59,7 @@ export function useSession(box: Box) {
   let lastCardIndex = 0
   const currentCard = ref(getCardsToLearn()[0])
 
-  function nextCard(): void {
+  function nextCard() {
     const cards = getCardsToLearn()
     let nextCard = cards[lastCardIndex]
 
@@ -131,24 +76,18 @@ export function useSession(box: Box) {
     currentCard.value = cards[lastCardIndex]
   }
 
-  function addSuccess(): void {
-    const cardState = getCardState()
-    cardState.successCount++
-    cardState.lastResponse = getCurrentDate()
+  async function addSuccess() {
+    await addCardSuccess(box.value.id, currentCard.value.id)
   }
 
-  function addError(): void {
-    const cardState = getCardState()
-    cardState.errorCount++
-    cardState.lastResponse = getCurrentDate()
+  async function addError() {
+    await addCardError(box.value.id, currentCard.value.id)
   }
 
   return {
     currentCard: readonly(currentCard),
-    getCardState,
     nextCard,
     addSuccess,
     addError,
-    reset,
   }
 }
