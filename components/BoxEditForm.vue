@@ -6,6 +6,7 @@ import BoxCardInput from '@/components/BoxCardInput.vue'
 import { nextTick, ref, onMounted, ComponentPublicInstance } from 'vue'
 import { cloneDeep } from 'lodash-es'
 import type { EditBox, NewCard } from '@/server/trpc/types'
+import { wait } from '~~/utils/wait'
 
 const props = defineProps<{
   box: EditBox
@@ -54,7 +55,9 @@ async function save() {
   })
 }
 
-onMounted(() => {
+onMounted(async () => {
+  // Nuxt seems to focus something else when route changes
+  await wait(50)
   inputFrontEl.value?.$el.focus()
 })
 </script>
@@ -76,7 +79,6 @@ onMounted(() => {
           ref="inputFrontEl"
           v-model="newCard.front"
           placeholder="Frontside ..."
-          autofocus
         />
         <BoxCardInput
           v-model="newCard.back"

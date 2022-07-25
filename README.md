@@ -13,12 +13,10 @@ This app helps you learn "atomic" things like vocabulary, formula and everything
 - [x] Sync new Github User with Anonymous User
 - [x] Add first box to fresh user
 - [x] Add smarter card relevance for new cards
-- [ ] Add loading skeleton
+- [ ] Add busy animation
 - [ ] Add about page
 - [ ] Add card deletion
 - [ ] Improve card style
-- [ ] Add button pending indicator
-- [ ] Add global pending indicator
 - [ ] Add single card reset
 - [ ] Add different learning variants (timer, speech to text, ...)
 - [ ] Add learn duration diff setting
