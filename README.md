@@ -12,7 +12,7 @@ This app helps you learn "atomic" things like vocabulary, formula and everything
 - [x] Add unauthorized usage option
 - [x] Sync new Github User with Anonymous User
 - [x] Add first box to fresh user
-- [ ] Add smarter card relevance for new cards
+- [x] Add smarter card relevance for new cards
 - [ ] Add single card reset
 - [ ] Add loading skeleton
 - [ ] Add button pending indicator
@@ -20,6 +20,7 @@ This app helps you learn "atomic" things like vocabulary, formula and everything
 - [ ] Improve card style
 - [ ] Add different learning variants (timer, speech to text, ...)
 - [ ] Add learn duration diff setting
+- [ ] Add PWA support
 - [ ] Add TRPC subscriptions for cross tab updates
 
 ## Unauthorized usage
