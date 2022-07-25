@@ -16,7 +16,7 @@ const { data: boxes, pending } = await useBoxes()
     <div class="grid sm:grid-cols-2 gap-4">
       <NuxtLink
         to="/new-box"
-        class="sm:h-36 p-6 text-2xl border border-dashed rounded-lg hover:shadow-lg flex items-center justify-center gap-2"
+        class="sm:h-40 p-6 text-2xl border border-dashed rounded-lg hover:shadow-lg flex items-center justify-center gap-2"
       >
         <mdicon name="plus-box-outline" size="30" />
         Create New Box
@@ -33,9 +33,10 @@ const { data: boxes, pending } = await useBoxes()
           v-for="(box, index) in boxes"
           :key="index"
           :to="`/box/${box.id}`"
-          class="sm:h-36 p-6 text-2xl bg-white shadow-md rounded-lg hover:shadow-lg flex items-center justify-center"
+          class="sm:h-40 p-6 text-2xl bg-white shadow-md rounded-lg hover:shadow-lg flex flex-col items-center justify-center"
         >
-          {{ box.name }}
+          <h3>{{ box.name }}</h3>
+          <p class="text-sm">{{ box._count.cards }} Cards</p>
         </NuxtLink>
       </TransitionGroup>
     </div>

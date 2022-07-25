@@ -25,6 +25,11 @@ export const boxes = trpcRouter<Context>()
         where: {
           userId: user.id,
         },
+        include: {
+          _count: {
+            select: { cards: true },
+          },
+        },
       })
       return boxes
     },
