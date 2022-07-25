@@ -2,7 +2,7 @@
 import { getAccuracy } from '@/store/cards'
 import type { Card } from '@/server/trpc/types'
 
-const props = defineProps<{
+defineProps<{
   card: Card
 }>()
 </script>
