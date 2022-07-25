@@ -48,17 +48,32 @@ async function handleSkip() {
         </LinkButton>
       </div>
     </div>
-    <div>
-      <div class="grid gap-5 mb-6">
+    <div class="relative">
+      <div
+        class="absolute inset-0 bg-white rounded-2xl shadow-lg translate-y-6 md:translate-y-11 scale-90"
+      ></div>
+      <div
+        class="absolute inset-0 bg-white rounded-2xl shadow-xl translate-y-3 md:translate-y-6 scale-95"
+      ></div>
+      <TransitionGroup
+        tag="div"
+        class="relative"
+        enter-active-class="absolute inset-0 duration-300 ease-out"
+        enter-from-class="transform motion-safe:translate-y-3 md:motion-safe:translate-y-6 motion-safe:scale-95"
+        leave-active-class="relative duration-300 ease-out z-10"
+        leave-from-class="transform opacity-100"
+        leave-to-class="opacity-0 motion-safe:-translate-y-10 md:motion-safe:-translate-y-20 motion-safe:scale-105"
+      >
         <QuestionCard
           ref="boxEl"
+          :key="currentCard.id"
           :card="currentCard"
           :show-back="showBack"
           @success="handleSuccess"
           @error="handleError"
           @skip="handleSkip"
         />
-      </div>
+      </TransitionGroup>
     </div>
   </div>
 </template>

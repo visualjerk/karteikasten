@@ -52,7 +52,7 @@ onMounted(reset)
     class="grid gap-4 p-4 sm:p-10 border rounded-2xl shadow-2xl text-center"
     :class="[
       hasCorrectAnswer
-        ? 'border-green-600 bg-green-50 shadow-green-300'
+        ? 'border-green-200 bg-green-50 shadow-green-300'
         : 'border-slate-200 bg-white shadow-slate-300',
     ]"
   >
