@@ -1,17 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { getAccuracy } from '@/store/cards'
 import type { Card } from '@/server/trpc/types'
 
 const props = defineProps<{
   card: Card
 }>()
-const accuracy = computed(() => {
-  const { errorCount, successCount } = props.card
-  if (successCount === 0) {
-    return 0
-  }
-  return successCount / (errorCount + successCount)
-})
 </script>
 
 <template>
@@ -23,7 +16,7 @@ const accuracy = computed(() => {
     <div class="bg-slate-300 overflow-hidden rounded-lg">
       <div
         class="h-3 bg-green-600"
-        :style="{ width: `${accuracy * 100}%` }"
+        :style="{ width: `${getAccuracy(card) * 100}%` }"
       ></div>
     </div>
   </div>

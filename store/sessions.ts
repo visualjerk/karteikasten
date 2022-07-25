@@ -1,9 +1,18 @@
 import { readonly, ref, ComputedRef } from 'vue'
 import { DateTime, Duration, DurationLikeObject } from 'luxon'
-import { addError as addCardError, addSuccess as addCardSuccess } from './cards'
+import {
+  addError as addCardError,
+  addSuccess as addCardSuccess,
+  getAccuracy,
+} from './cards'
 import type { Box, Card } from '@/server/trpc/types'
 
-const LEARN_DURATION_DIFF = 30
+const LEARN_DURATION_DIFF = 60 * 60 * 4 // 4 hours
+const ACCURACY_STEPS = [0.5, 0.7, 0.9, 1]
+
+function hasLessOrEqualAccuracyAs(card: Card, accuracy: number) {
+  return getAccuracy(card) <= accuracy
+}
 
 function isOlderThan(date: Date, duration: DurationLikeObject) {
   return (
@@ -12,48 +21,43 @@ function isOlderThan(date: Date, duration: DurationLikeObject) {
   )
 }
 
-function hasLessSuccessThan(card: Card, successCount: number) {
-  return card.successCount < successCount
-}
-
-function isRelevant(card: Card, addSuccessCount = 0) {
-  for (let step = 1; step < 5; step++) {
+function isRelevant(card: Card, reduceDurationFactor = 0) {
+  return ACCURACY_STEPS.some((accuracy, index) => {
     if (!card.lastTryAt) {
       return true
     }
 
-    const successCount = step + addSuccessCount
+    // Reduce the needed duration with each new
+    const durationFactor = index - reduceDurationFactor
     const duration =
-      step === 1
+      durationFactor <= 0
         ? null
         : Duration.fromDurationLike({
-            seconds: LEARN_DURATION_DIFF * step,
+            seconds: LEARN_DURATION_DIFF * durationFactor,
           })
+    const isInDuration = duration ? isOlderThan(card.lastTryAt, duration) : true
 
-    if (
-      hasLessSuccessThan(card, successCount) &&
-      (!duration || isOlderThan(card.lastTryAt, duration))
-    ) {
-      return true
-    }
-  }
-  return false
+    return isInDuration && hasLessOrEqualAccuracyAs(card, accuracy)
+  })
 }
 
 export function useSession(box: ComputedRef<Box>) {
-  function getCardsToLearn(successDiffAdd = 0): Card[] {
+  function getCardsToLearn(reduceDurationFactor = 0): Card[] {
+    const allCards = box.value.cards
+
     if (!box.value.cards.length) {
       return []
     }
 
-    const cards = box.value.cards.filter((card) => {
-      return isRelevant(card, successDiffAdd)
+    const cards = allCards.filter((card) => {
+      return isRelevant(card, reduceDurationFactor)
     })
 
-    if (cards.length) {
+    // Ensure we have at least 1/3 of the cards
+    if (cards.length > allCards.length / 3) {
       return cards
     }
-    return getCardsToLearn(successDiffAdd + 1)
+    return getCardsToLearn(reduceDurationFactor + 1)
   }
 
   let lastCardIndex = 0
