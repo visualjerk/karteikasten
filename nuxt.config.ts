@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     postcss: {
       postcssOptions: require('./postcss.config.cjs'),
     },
+    transpile: ['mdi-vue'],
   },
   modules: ['trpc-nuxt'],
   trpc: {

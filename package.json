@@ -7,11 +7,13 @@
     "preview": "nuxt preview"
   },
   "dependencies": {
+    "@mdi/js": "^7.0.96",
     "@prisma/client": "^4.1.0",
     "@vueuse/core": "^8.9.3",
     "jsonwebtoken": "^8.5.1",
     "lodash-es": "^4.17.21",
     "luxon": "^3.0.1",
+    "mdi-vue": "^3.0.13",
     "node-cache": "^5.1.2",
     "octokit": "^2.0.4",
     "trpc-nuxt": "^0.2.4",

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useBoxes } from '@/store/boxes'
-const { data: boxes } = await useBoxes()
+const { data: boxes, pending } = await useBoxes()
 </script>
 
 <template>
@@ -12,27 +12,32 @@ const { data: boxes } = await useBoxes()
     </p>
 
     <h2 class="mb-4">Your Boxes</h2>
+
     <div class="grid sm:grid-cols-2 gap-4">
       <NuxtLink
         to="/new-box"
         class="sm:h-36 p-6 text-2xl border border-dashed rounded-lg hover:shadow-lg flex items-center justify-center gap-2"
       >
-        <svg style="width: 30px; height: 30px" viewBox="0 0 24 24">
-          <path
-            fill="currentColor"
-            d="M19,19V5H5V19H19M19,3A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5A2,2 0 0,1 3,19V5C3,3.89 3.9,3 5,3H19M11,7H13V11H17V13H13V17H11V13H7V11H11V7Z"
-          />
-        </svg>
-        Create New Box</NuxtLink
-      >
-      <NuxtLink
-        v-for="box in boxes"
-        :key="box.id"
-        :to="`/box/${box.id}`"
-        class="sm:h-36 p-6 text-2xl bg-white shadow-md rounded-lg hover:shadow-lg flex items-center justify-center"
-      >
-        {{ box.name }}
+        <mdicon name="plus-box-outline" size="30" />
+        Create New Box
       </NuxtLink>
+      <TransitionGroup
+        enter-active-class="duration-200 ease-in"
+        enter-from-class="transform opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="duration-200 ease-in"
+        leave-from-class="transform opacity-100"
+        leave-to-class="opacity-0"
+      >
+        <NuxtLink
+          v-for="(box, index) in boxes"
+          :key="index"
+          :to="`/box/${box.id}`"
+          class="sm:h-36 p-6 text-2xl bg-white shadow-md rounded-lg hover:shadow-lg flex items-center justify-center"
+        >
+          {{ box.name }}
+        </NuxtLink>
+      </TransitionGroup>
     </div>
   </article>
 </template>

@@ -82,31 +82,16 @@ onMounted(reset)
     </div>
     <ActionButton v-if="showBack" primary size="large" @click="handleSkip">
       Next Card
-      <svg style="width: 24px; height: 24px" viewBox="0 0 24 24" class="ml-2">
-        <path
-          fill="currentColor"
-          d="M14 16.94V12.94H5.08L5.05 10.93H14V6.94L19 11.94Z"
-        />
-      </svg>
+      <mdicon name="arrow-right-thin" class="ml-2" />
     </ActionButton>
     <div v-else class="grid grid-cols-2 gap-4">
       <ActionButton size="large" @click="handleError">
-        <svg style="width: 24px; height: 24px" viewBox="0 0 24 24" class="mr-2">
-          <path
-            fill="currentColor"
-            d="M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9M12,4.5C17,4.5 21.27,7.61 23,12C21.27,16.39 17,19.5 12,19.5C7,19.5 2.73,16.39 1,12C2.73,7.61 7,4.5 12,4.5M3.18,12C4.83,15.36 8.24,17.5 12,17.5C15.76,17.5 19.17,15.36 20.82,12C19.17,8.64 15.76,6.5 12,6.5C8.24,6.5 4.83,8.64 3.18,12Z"
-          />
-        </svg>
+        <mdicon name="eye-outline" class="mr-2" />
         Show <span class="hidden sm:inline">Answer</span>
       </ActionButton>
       <ActionButton primary size="large" @click="handleSkip">
         Skip <span class="hidden sm:inline">Card</span>
-        <svg style="width: 24px; height: 24px" viewBox="0 0 24 24" class="ml-2">
-          <path
-            fill="currentColor"
-            d="M14 16.94V12.94H5.08L5.05 10.93H14V6.94L19 11.94Z"
-          />
-        </svg>
+        <mdicon name="arrow-right-thin" class="ml-2" />
       </ActionButton>
     </div>
   </div>
