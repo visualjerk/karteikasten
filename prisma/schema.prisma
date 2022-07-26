@@ -16,6 +16,7 @@ model User {
   id        Int      @id @default(autoincrement())
   githubId  Int?     @unique
   createdAt DateTime @default(now())
+  lastLogin DateTime @default(now())
   boxes     Box[]
 }
 
