@@ -55,7 +55,7 @@ async function handleReset() {
     <NuxtLink
       v-if="!box.cards?.length"
       :to="`/box/${box.id}/edit`"
-      class="p-6 text-2xl h-36 border border-dashed rounded-lg hover:shadow-lg flex items-center justify-center gap-2"
+      class="p-6 text-2xl h-36 border border-slate-300 border-dashed rounded-lg hover:shadow-lg flex items-center justify-center gap-2"
     >
       <mdicon name="plus-box-outline" size="30" />
       Add cards to this box

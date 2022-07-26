@@ -26,7 +26,7 @@ const { data: box, pending } = await useBox(Number(route.params.id))
       <div v-else key="notfound">
         <h1 class="mb-8">Box not found</h1>
         <div
-          class="p-8 border border-dashed rounded-lg flex flex-col items-center justify-center"
+          class="p-8 border border-slate-300 border-dashed rounded-lg flex flex-col items-center justify-center"
         >
           <mdicon
             name="emoticon-sad-outline"
