@@ -1,11 +1,12 @@
 import { getCache } from '@/server/cache'
+import { GH_COOKIE } from '@/constants'
 
 export default defineEventHandler((event) => {
-  const { gh_token } = useCookies(event)
-  if (!gh_token) {
+  const ghToken = useCookies(event)[GH_COOKIE]
+  if (!ghToken) {
     return true
   }
-  getCache().del(gh_token)
-  deleteCookie(event, 'gh_token')
+  getCache().del(ghToken)
+  deleteCookie(event, GH_COOKIE)
   return true
 })

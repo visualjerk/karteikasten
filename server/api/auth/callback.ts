@@ -1,4 +1,6 @@
+import { GH_COOKIE } from '@/constants'
 import { useQuery, sendRedirect, setCookie } from 'h3'
+import { DateTime } from 'luxon'
 
 export default defineEventHandler(async (event) => {
   const { code } = useQuery(event)
@@ -21,7 +23,12 @@ export default defineEventHandler(async (event) => {
     return sendRedirect(event, '/')
   }
 
-  setCookie(event, 'gh_token', response.access_token, { path: '/' })
+  setCookie(event, GH_COOKIE, response.access_token, {
+    path: '/',
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    expires: DateTime.now().plus({ days: 7 }).toJSDate(),
+  })
 
   return sendRedirect(event, '/')
 })

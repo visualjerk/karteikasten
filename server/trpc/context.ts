@@ -1,7 +1,9 @@
 import { PrismaClient } from '@prisma/client'
 import { Octokit } from 'octokit'
 import { getCache } from '@/server/cache'
+import { ANONYMOUS_COOKIE, GH_COOKIE } from '@/constants'
 import jwt from 'jsonwebtoken'
+import { DateTime } from 'luxon'
 import type { inferAsyncReturnType } from '@trpc/server'
 import type { CompatibilityEvent } from 'h3'
 
@@ -52,7 +54,7 @@ async function getAnonymousUser(
   event: CompatibilityEvent,
   prisma: PrismaClient
 ): Promise<AnonymousUser> {
-  const { token } = useCookies(event)
+  const token = useCookies(event)[ANONYMOUS_COOKIE]
 
   // Anonymously login with token if it is valid and the user exists
   if (token) {
@@ -90,8 +92,15 @@ async function getAnonymousUser(
     },
   })
   const authUser: AnonymousUser = { id: user.id }
-  const newToken = jwt.sign(authUser, process.env.JWT_SECRET as string)
-  setCookie(event, 'token', newToken)
+  const newToken = jwt.sign(authUser, process.env.JWT_SECRET as string, {
+    expiresIn: '2y',
+  })
+  setCookie(event, ANONYMOUS_COOKIE, newToken, {
+    path: '/',
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    expires: DateTime.now().plus({ years: 2 }).toJSDate(),
+  })
   return authUser
 }
 
@@ -99,7 +108,7 @@ async function getUserFromHeader(
   event: CompatibilityEvent,
   prisma: PrismaClient
 ): Promise<GithubUser | AnonymousUser> {
-  const { gh_token: ghToken } = useCookies(event)
+  const ghToken = useCookies(event)[GH_COOKIE]
 
   if (!ghToken) {
     return getAnonymousUser(event, prisma)
