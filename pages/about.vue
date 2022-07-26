@@ -102,10 +102,10 @@
     <article class="grid gap-6">
       <h2 class="mb-4">Which tech stack does it use?</h2>
       <p>
-        The app is build with
-        <a href="https://v3.nuxtjs.org/" target="_blank">Nuxt 3</a>. It uses
-        <a href="https://trpc.io/" target="_blank">TRPC</a> to create the Rest
-        API and <a href="https://www.prisma.io/" target="_blank">Prisma</a> to
+        The app is built with
+        <a href="https://v3.nuxtjs.org" target="_blank">Nuxt3</a>. It uses
+        <a href="https://trpc.io" target="_blank">TRPC</a> to create the Rest
+        API and <a href="https://www.prisma.io" target="_blank">Prisma</a> to
         communicate with a MySQL database. Authentication is provided by
         <a href="https://docs.github.com/en/rest" target="_blank"
           >GitHub's API</a
@@ -113,8 +113,8 @@
       </p>
       <p>
         It uses
-        <a href="https://tailwindcss.com/" target="_blank">TailwindCSS</a> and
-        <a href="https://materialdesignicons.com/" target="_blank"
+        <a href="https://tailwindcss.com" target="_blank">TailwindCSS</a> and
+        <a href="https://materialdesignicons.com" target="_blank"
           >Materialdesignicons</a
         >
         for styling.
@@ -122,9 +122,9 @@
 
       <p>
         The production environment is deployed to
-        <a href="https://vercel.com/" target="_blank">Vercel</a>. The database
-        is served by
-        <a href="https://planetscale.com/" target="_blank">Planetscale</a>. App
+        <a href="https://vercel.com" target="_blank">Vercel</a>. The database is
+        served by
+        <a href="https://planetscale.com" target="_blank">Planetscale</a>. App
         and database are hosted on a server in EU West, which means you might
         get a slower experience when accessing it from somewhere else.
       </p>

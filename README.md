@@ -2,6 +2,8 @@
 
 This app helps you learn "atomic" things like vocabulary, formula and everything else that fits on a card.
 
+It is built with [Nuxt3](https://v3.nuxtjs.org), [Prisma](https://www.prisma.io) and [TRPC](https://trpc.io).
+
 [Open Karteikasten](https://karteikasten.vercel.app)
 
 ![Preview](preview.png)
