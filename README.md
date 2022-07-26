@@ -4,6 +4,8 @@ This app helps you learn "atomic" things like vocabulary, formula and everything
 
 [Open Karteikasten](https://karteikasten.vercel.app)
 
+![Preview](preview.jpg)
+
 ## TODOS
 
 - [x] Add learn with TRPC
