@@ -4,7 +4,7 @@ This app helps you learn "atomic" things like vocabulary, formula and everything
 
 [Open Karteikasten](https://karteikasten.vercel.app)
 
-![Preview](preview.jpg)
+![Preview](preview.png)
 
 ## TODOS
 
