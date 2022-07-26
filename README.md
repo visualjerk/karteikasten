@@ -11,7 +11,6 @@ It is built with [Nuxt3](https://v3.nuxtjs.org), [Prisma](https://www.prisma.io)
 ## TODOS
 
 - [x] Add learn with TRPC
-- [x] Add global learning reset
 - [x] Improve auth check performance
 - [x] Add unauthorized usage option
 - [x] Sync new Github User with Anonymous User
