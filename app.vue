@@ -81,7 +81,7 @@ useHead({
       <NuxtPage />
     </main>
     <footer class="p-8 flex justify-center items-center gap-1 text-slate-500">
-      Build by
+      Built by
       <a
         href="https://twitter.com/visual_jerk"
         target="_blank"
