@@ -29,7 +29,7 @@ useHead({
     >
       <NuxtLink to="/" class="text-purple-600 flex gap-1 items-center pl-2">
         <div
-          class="bg-fuchsia-800 h-7 w-7 flex items-center shrink-0 justify-center mr-1 rounded-full text-fuchsia-300"
+          class="bg-fuchsia-600 h-7 w-7 flex items-center shrink-0 justify-center mr-1 rounded-full text-fuchsia-100"
         >
           <mdicon name="school" size="20" />
         </div>
