@@ -22,5 +22,5 @@
 @tailwind utilities;
 
 body {
-  @apply overflow-y-scroll;
+  @apply overflow-y-scroll bg-slate-100;
 }

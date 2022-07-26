@@ -100,7 +100,7 @@
       </p>
     </article>
     <article class="grid gap-6">
-      <h2 class="mb-4">Which tech stack does it use?</h2>
+      <h2 class="mb-4">How was it developed?</h2>
       <p>
         The app is built with
         <a href="https://v3.nuxtjs.org" target="_blank">Nuxt3</a>. It uses

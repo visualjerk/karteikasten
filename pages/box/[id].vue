@@ -19,9 +19,9 @@ const { data: box, pending } = await useBox(Number(route.params.id))
       </div>
       <div v-else-if="pending" key="pending">
         <div
-          class="h-9 mt-2 mb-9 w-1/3 bg-slate-100 rounded-lg animate-pulse"
+          class="h-9 mt-2 mb-9 w-1/3 bg-slate-200 rounded-lg animate-pulse"
         ></div>
-        <div class="h-80 mt-2 bg-slate-100 rounded-lg animate-pulse"></div>
+        <div class="h-80 mt-2 bg-slate-200 rounded-lg animate-pulse"></div>
       </div>
       <div v-else key="notfound">
         <h1 class="mb-8">Box not found</h1>

@@ -62,7 +62,7 @@ async function handleReset() {
     </NuxtLink>
     <div v-else>
       <div
-        class="grid sm:grid-cols-2 gap-5 p-5 md:p-7 mb-10 bg-slate-100 rounded-lg border border-slate-200"
+        class="grid sm:grid-cols-2 gap-5 p-5 md:p-7 mb-10 rounded-lg border border-slate-300"
       >
         <LinkButton primary size="large" :to="`/box/${box.id}/learn`">
           <mdicon name="play-circle-outline" class="mr-1" />
