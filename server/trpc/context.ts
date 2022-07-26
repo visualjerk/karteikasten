@@ -63,12 +63,9 @@ async function getAnonymousUser(
         token,
         process.env.JWT_SECRET as string
       ) as AnonymousUser
-      const user = await prisma.user.update({
+      const user = await prisma.user.findFirst({
         where: {
           id: authUser.id,
-        },
-        data: {
-          lastLogin: DateTime.now().toJSDate(),
         },
       })
       if (user) {
@@ -133,13 +130,10 @@ async function getUserFromHeader(
     return getAnonymousUser(event, prisma)
   }
 
-  // Find GitHub user in DB and update last login
-  let user = await prisma.user.update({
+  // Find GitHub user in DB
+  let user = await prisma.user.findFirst({
     where: {
       githubId: data.id,
-    },
-    data: {
-      lastLogin: DateTime.now().toJSDate(),
     },
   })
 
@@ -152,7 +146,6 @@ async function getUserFromHeader(
       },
       data: {
         githubId: data.id,
-        lastLogin: DateTime.now().toJSDate(),
       },
     })
   }
