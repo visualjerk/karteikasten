@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import BoxEditForm from '@/components/BoxEditForm.vue'
-import { useRouter } from 'vue-router'
 import { createBox } from '@/store/boxes'
 import type { EditBox } from '@/server/trpc/types'
 
@@ -18,7 +17,12 @@ function handleCancel() {
 </script>
 
 <template>
-  <BoxEditForm :box="newBox" @save="handleSave" @cancel="handleCancel">
+  <BoxEditForm
+    :box="newBox"
+    @save="handleSave"
+    @cancel="handleCancel"
+    autofocus
+  >
     <template #save-button>Save New Box</template>
     <template #cancel-button>Discard Box</template>
   </BoxEditForm>

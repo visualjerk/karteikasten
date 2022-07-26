@@ -3,7 +3,6 @@ import LinkButton from '@/components/LinkButton.vue'
 import ActionButton from '@/components/ActionButton.vue'
 import OverviewCard from '@/components/OverviewCard.vue'
 
-import { useRouter } from 'vue-router'
 import { deleteBox, resetBox } from '@/store/boxes'
 import type { Box } from '@/server/trpc/types'
 

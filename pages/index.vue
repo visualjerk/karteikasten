@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useBoxes } from '@/store/boxes'
-const { data: boxes, pending } = await useBoxes()
+const { data: boxes } = await useBoxes()
 </script>
 
 <template>

@@ -15,4 +15,5 @@ export function login() {
 export async function logout() {
   await $fetch('/api/auth/logout')
   await refreshNuxtData()
+  useRouter().push('/')
 }

@@ -10,6 +10,7 @@ import { wait } from '~~/utils/wait'
 
 const props = defineProps<{
   box: EditBox
+  autofocus?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -58,7 +59,9 @@ async function save() {
 onMounted(async () => {
   // Nuxt seems to focus something else when route changes
   await wait(50)
-  inputFrontEl.value?.$el.focus()
+  if (props.autofocus) {
+    inputFrontEl.value?.$el.focus()
+  }
 })
 </script>
 

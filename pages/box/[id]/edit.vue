@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import BoxEditForm from '@/components/BoxEditForm.vue'
-import { useRouter } from 'vue-router'
 import { updateBox } from '@/store/boxes'
 import type { Box, EditBox } from '@/server/trpc/types'
 

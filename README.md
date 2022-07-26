@@ -14,9 +14,9 @@ This app helps you learn "atomic" things like vocabulary, formula and everything
 - [x] Add first box to fresh user
 - [x] Add smarter card relevance for new cards
 - [x] Improve card style
+- [x] Add skeleton loader
 - [ ] Improve box style
 - [ ] Improve box overview style
-- [ ] Add busy animation
 - [ ] Add about page
 - [ ] Add card deletion
 - [ ] Add single card reset
