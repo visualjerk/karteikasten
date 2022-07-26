@@ -5,10 +5,13 @@ const { data: boxes } = await useBoxes()
 
 <template>
   <article>
-    <h1 class="mb-4">Atomic Learning</h1>
-    <p class="mb-6">
+    <h1 class="mb-8">Atomic Learning</h1>
+    <p class="mb-10">
       This tool helps you learn "atomic" things like vocabulary, formula and
-      everything else that fits on a card.
+      everything else that fits on a card. Read more about it in our
+      <NuxtLink to="/about" class="text-purple-600 hover:text-purple-700"
+        >about page</NuxtLink
+      >.
     </p>
 
     <h2 class="mb-4">Your Boxes</h2>
