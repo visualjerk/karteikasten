@@ -80,5 +80,15 @@ useHead({
     <main class="py-6 sm:py-10 px-4 max-w-screen-md m-auto">
       <NuxtPage />
     </main>
+    <footer class="p-8 flex justify-center items-center gap-1 text-slate-500">
+      Build by
+      <a
+        href="https://twitter.com/visual_jerk"
+        target="_blank"
+        class="inline-flex items-center"
+      >
+        <mdicon name="twitter" size="20" /> visualjerk
+      </a>
+    </footer>
   </div>
 </template>

@@ -14,7 +14,7 @@ function handleInput(event: Event) {
 
 <template>
   <input
-    class="p-2 text-lg text-slate-700 font-medium outline-none border-b-2 border-transparent focus:border-purple-600"
+    class="p-2 text-lg text-slate-700 font-medium outline-none border-b-2 border-transparent focus:border-purple-600 hover:border-purple-600"
     :value="modelValue"
     @input="handleInput"
   />

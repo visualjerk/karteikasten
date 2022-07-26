@@ -69,7 +69,7 @@ onMounted(async () => {
   <article>
     <input
       v-model="boxCopy.name"
-      class="h1 mb-8 w-full bg-transparent"
+      class="h1 mb-8 w-full bg-transparent outline-none border-b-2 border-transparent focus:border-purple-600 hover:border-purple-600"
       :readonly="pending"
     />
     <div class="grid gap-2 mb-6">
