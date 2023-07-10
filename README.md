@@ -8,6 +8,28 @@ It is built with [Nuxt3](https://v3.nuxtjs.org), [Prisma](https://www.prisma.io)
 
 ![Preview](preview.png)
 
+## Setup
+
+Install dependencies:
+
+```bash
+yarn install
+```
+
+Copy `.env.example` to `.env` and add your database connection string as well as a github client id and client secret.
+
+Setup MySQL database:
+
+```bash
+npx prisma db push
+```
+
+Start dev server:
+
+```bash
+yarn run dev
+```
+
 ## TODOS
 
 - [x] Add learn with TRPC
